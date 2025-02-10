@@ -14,15 +14,20 @@ echo "START TIME": '' $(date -u)
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate FastqDump
-export http_proxy=http://10.0.7.235:3128
+export https_proxy=http://10.0.7.235:3128
 
-for i in $(cat assembly_ASG_list.txt)
-do
-     OUTPUTDIR="/gxfs_work/geomar/smomw681/DATA/RAWDATA"
-     echo "Download starts at: $(date -u)"
-     echo working with $i
-     ncbi-genome-download -A $i -p 10 -o ${OUTPUTDIR} all ; 
-     echo "Download ends at:'' $(date -u)"
-     done
-echo "END TIME": '' $(date -u)"
-## 
+OUTPUTDIR="/gxfs_work/geomar/smomw681/DATA/ASG_MAG"
+
+echo "Download starts at: $(date -u)"
+
+echo working with ERZ21784910
+wget -nc -P ${OUTPUTDIR} ftp://ftp.sra.ebi.ac.uk/vol1/analysis/ERZ217/ERZ21784910/odEunFrag1.metagenome.1.primary.fa.gz
+
+echo working with ERZ18440741
+wget -nc -P ${OUTPUTDIR} ftp://ftp.sra.ebi.ac.uk/vol1/analysis/ERZ184/ERZ18440741/odSpoLacu1.metagenome.1.primary.fa.gz
+
+
+echo "Download ends at:'' $(date -u)"
+
+
+##
