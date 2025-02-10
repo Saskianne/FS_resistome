@@ -9,19 +9,19 @@
 #SBATCH --error=SRRDownload_ASG_run_errors_2.err
 # here starts your actual program call/computation
 #
-cd /gxfs_work/geomar/smomw681/DATA/ASG_RAWDATA
+cd /gxfs_work/geomar/smomw681/DATA
 echo "START TIME": '' 'date'
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate FastqDump
 export http_proxy=http://10.0.7.235:3128
 
-for i in $(cat biopr_ASG_list.txt)
+for i in $(cat assembly_ASG_list.txt)
 do
      OUTPUTDIR="/gxfs_work/geomar/smomw681/DATA/RAWDATA"
      echo "Download starts at": '' 'time' "on" 'date'
      echo working with $i
-     parallel -j 10 datasets download genome accession {} ::: $i; 
+     ncbi-genome-download -A $i -p 10 -l all -o ${OUTPUTDIR}; 
      echo "Download ends at": '' 'time' "on" 'date'
 done
 echo "END TIME": '' 'date'
