@@ -26,4 +26,4 @@ Bioinformatic tools:
 General understanding:
 - Metagenome assembly with metaSPAdes: https://carpentries-lab.github.io/metagenomics-analysis/04-assembly/index.html
 - conda: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
-- 
+

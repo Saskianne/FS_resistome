@@ -19,7 +19,7 @@ conda activate Assembly
 for sample in `ls /gxfs_work/geomar/smomw681/DATA/QCed_DATA/*.qc.pe.R1.fq.gz`;
     do
     echo Start to working with $sample
-    dir1="/gxfs_work/geomar/smomw647/DATABASES"
+    dir1="/gxfs_work/geomar/smomw681/DATABASES"
     dir2="/gxfs_work/geomar/smomw681/DATA/QCed_DATA"; base=$(basename $sample ".qc.pe.R1.fq.gz");
     dir3="/gxfs_work/geomar/smomw681/DATA/PHIX_FILTERED"
     bbmap.sh ref=${dir1}/Phix174.fasta \

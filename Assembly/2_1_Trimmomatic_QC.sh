@@ -3,7 +3,7 @@
 #SBATCH --job-name=Trm1
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
-#SBATCH -p base                  # Partition to submit to
+#SBATCH -p highmem                  # Partition to submit to
 #SBATCH --mem=250G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=Trim_output.out
 #SBATCH --error=Trim_run_errors.err
