@@ -3,10 +3,10 @@
 #SBATCH --job-name=PhIX1
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
-#SBATCH -p highmem                  # Partition to submit to                  # Partition to submit to
+#SBATCH -p base                  # Partition to submit to                  # Partition to submit to
 #SBATCH --mem=50G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=PHIX1_FILTERED_ouputlog.out
-#SBATCH --error=PHIX1_FILTERED_errors.err
+#SBATCH --output=PHIX1_FILTERED_base_ouputlog.out
+#SBATCH --error=PHIX1_FILTERED_base_errors.err
 # here starts your actual program call/computation
 #
 echo "START TIME": '' $(date)
