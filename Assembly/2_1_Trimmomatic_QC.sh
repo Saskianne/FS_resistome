@@ -4,7 +4,7 @@
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p highmem                  # Partition to submit to
-#SBATCH --mem=250G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=100G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=Trim_output.out
 #SBATCH --error=Trim_run_errors.err
 
@@ -26,7 +26,7 @@ FILES=($dir5/*_1.fastq.gz)
 # iterate over fastq files
 for fastq_file in "${FILES[@]}"; do
      base=$(basename $fastq_file "_1.fastq.gz")
-     sbatch --cpus-per-task=2 --mem=80G --time 5-00:00:00 --wrap="trimmomatic PE -threads 4 -phred33 \
+     sbatch --cpus-per-task=2 --mem=80G --time 5-00:00 --wrap="trimmomatic PE -threads 4 -phred33 \
           ${dir5}/${base}_1.fastq.gz ${dir5}/${base}_2.fastq.gz \
           ${dir4}/${base}.qc.pe.R1.fq.gz ${dir4}/${base}.qc.se.R1.fq.gz \
           ${dir4}/${base}.qc.pe.R2.fq.gz ${dir4}/${base}.qc.se.R2.fq.gz \

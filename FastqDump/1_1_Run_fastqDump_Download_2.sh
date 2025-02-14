@@ -29,3 +29,5 @@ OUTPUTDIR="/gxfs_work/geomar/smomw681/DATA/RAWDATA"
 done
 echo "END TIME": '' 'date'
 ##
+
+sbatch -c 8 --job-name fstqdmp --qos=long -p base --mem=50G  --output=SRRDownload_1.out --error=SRRDownload_1.err -t 3-00:00:00 fastq-dump --outdir ./ --gzip --split-files SRR23378605
