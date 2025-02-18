@@ -13,6 +13,17 @@ Bioinformatic tools:
     - metaSPAdes (bioconda::spades, v4.0.0)
     - Trimmomatric (bioconda::trimmomatic, v0.39)
     - bbmap (bioconda::bbmap, v39.15)
+    - wtdbg2(v2.5)
+        - https://github.com/ruanjue/wtdbg2
+    - Unicycler (v0.5.1)
+        - 
+    - (meta)Flye (v2.9.5)
+        - https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md
+    - Canu (v2.3)
+        - https://github.com/marbl/canu
+    - (meta)Quast (v5.3.0)
+        - https://quast.sourceforge.net/docs/manual.html#sec2.4
+        - https://github.com/ziyewang/MetaAssemblyEval
 - Resistome analysis
     - AntiSMASH (bioconda::antismash, v7.1.0)
         - installation manual: https://docs.antismash.secondarymetabolites.org/install/

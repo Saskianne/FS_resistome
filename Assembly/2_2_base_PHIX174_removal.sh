@@ -4,7 +4,7 @@
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
-#SBATCH --mem=50G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=PHIX1_FILTERED_base_ouputlog.out
 #SBATCH --error=PHIX1_FILTERED_base_errors.err
 # here starts your actual program call/computation

@@ -3,8 +3,8 @@
 #SBATCH --job-name=Tad1
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
-#SBATCH -p highmem                  # Partition to submit to
-#SBATCH --mem=250G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH -p base                  # Partition to submit to
+#SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=Tadpole2_logouput.out
 #SBATCH --error=Tadpole2_run_errors.err
 # here starts your actual program call/computation
@@ -26,7 +26,7 @@ for file in "${FILES[@]}";
 do
 echo Start error correction $file
 base=$(basename $file ".qc.PE.unmapped.fq.gz")
-sbatch --cpus-per-task=2 --mem=80G --wrap="tadpole.sh \
+sbatch --cpus-per-task=2 --mem=80G --time 2-00:00 --wrap="tadpole.sh \
 in=${dir1}/${base}.qc.PE.unmapped.fq.gz \
 out=${dir2}/${base}.qc.ec.PE.fq.gz \
 threads=8 ecc=t rollback=t pincer=t tail=t prefilter=t prealloc=t mode=correct tossbrokenreads=t"
