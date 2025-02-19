@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
 #SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=PacBio_assem.out
-#SBATCH --error=PacBio_assem_err.err
+#SBATCH --output=PacBio_assem_metaFlye.out
+#SBATCH --error=PacBio_assem_metaFlye.err
 
 # here starts your actual program call/computation
 #
@@ -19,19 +19,16 @@ echo "START TIME": '' $(date)
 
 # Set up variables
 
-dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES"
+dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/metaFlye"
 dir5="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
 FILES=($dir5/*_1.fastq.gz)
+BASES= $(basename ${FILES} "_1.fastq.gz")
 
 # iterate over fastq files
-for fastq_file in "${FILES[@]}"; do
-    
+for fastq_file in "${FILES[@]}"; do    
      base=$(basename $fastq_file "_1.fastq.gz")
-     sbatch --cpus-per-task=2 --mem=80G --time 5-00:00 --wrap="trimmomatic PE -threads 4 -phred33 \
-          ${dir5}/${base}_1.fastq.gz ${dir5}/${base}_2.fastq.gz \
-          ${dir4}/${base}.qc.pe.R1.fq.gz ${dir4}/${base}.qc.se.R1.fq.gz \
-          ${dir4}/${base}.qc.pe.R2.fq.gz ${dir4}/${base}.qc.se.R2.fq.gz \
-          ILLUMINACLIP:${dir3}/Complete_Adapter_Primer_info.fa:4:30:10 LEADING:25 TRAILING:25 SLIDINGWINDOW:4:20 MINLEN:40"
+     mkdir ${dir4}/${base}
+     flye --pacbio-raw $fastq_file --out-dir ${dir4}/${base} -t 8 --meta
 done
 
 echo "END TIME": '' $(date)

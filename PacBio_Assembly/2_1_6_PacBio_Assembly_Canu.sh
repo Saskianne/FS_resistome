@@ -3,10 +3,10 @@
 #SBATCH --job-name=PB_ASSEM
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
-#SBATCH -p base                  # Partition to submit to
+#SBATCH -p highmem                  # Partition to submit to
 #SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=PacBio_assem.out
-#SBATCH --error=PacBio_assem_err.err
+#SBATCH --output=PacBio_assem_Canu.out
+#SBATCH --error=PacBio_assem_Canu.err
 
 # here starts your actual program call/computation
 #
@@ -19,7 +19,7 @@ echo "START TIME": '' $(date)
 
 # Set up variables
 
-dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES"
+dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/Canu"
 dir5="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
 FILES=($dir5/*_1.fastq.gz)
 
@@ -27,11 +27,10 @@ FILES=($dir5/*_1.fastq.gz)
 for fastq_file in "${FILES[@]}"; do
     
      base=$(basename $fastq_file "_1.fastq.gz")
-     sbatch --cpus-per-task=2 --mem=80G --time 5-00:00 --wrap="trimmomatic PE -threads 4 -phred33 \
-          ${dir5}/${base}_1.fastq.gz ${dir5}/${base}_2.fastq.gz \
-          ${dir4}/${base}.qc.pe.R1.fq.gz ${dir4}/${base}.qc.se.R1.fq.gz \
-          ${dir4}/${base}.qc.pe.R2.fq.gz ${dir4}/${base}.qc.se.R2.fq.gz \
-          ILLUMINACLIP:${dir3}/Complete_Adapter_Primer_info.fa:4:30:10 LEADING:25 TRAILING:25 SLIDINGWINDOW:4:20 MINLEN:40"
+     sbatch --cpus-per-task=2 --mem=80G --time 5-00:00 \
+          --wrap="canu -threads 4 -phred33 \
+          -p ${base} -d ${dir4}/${base}
+          --pacbio-raw $fastq_file"
 done
 
 echo "END TIME": '' $(date)

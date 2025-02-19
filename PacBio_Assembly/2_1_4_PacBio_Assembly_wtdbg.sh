@@ -4,7 +4,7 @@
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
-#SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=150G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=PacBio_assem_wtdbg.out
 #SBATCH --error=PacBio_assem_wtdbg_err.err
 
@@ -22,17 +22,15 @@ echo "START TIME": '' $(date)
 dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES"
 dir5="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
 FILES=($dir5/*_1.fastq.gz)
+BASES= $(basename ${FILES} "_1.fastq.gz")
 
 # iterate over fastq files
-for fastq_file in "${FILES[@]}"; do
-    
-     base=$(basename $fastq_file "_1.fastq.gz")
-     sbatch --cpus-per-task=2 --mem=80G --time 5-00:00 --wrap="trimmomatic PE -threads 4 -phred33 \
-          ${dir5}/${base}_1.fastq.gz ${dir5}/${base}_2.fastq.gz \
-          ${dir4}/${base}.qc.pe.R1.fq.gz ${dir4}/${base}.qc.se.R1.fq.gz \
-          ${dir4}/${base}.qc.pe.R2.fq.gz ${dir4}/${base}.qc.se.R2.fq.gz \
-          ILLUMINACLIP:${dir3}/Complete_Adapter_Primer_info.fa:4:30:10 LEADING:25 TRAILING:25 SLIDINGWINDOW:4:20 MINLEN:40"
-done
+
+parallel -j 4 " \   
+     base=$(basename {1} '_1.fastq.gz'); \
+     wtdbg2 -x sq -t 8 -fo {2} -i {1} \
+     wtpoa-cns -t 8 -i {2}.ctg.lay.gz -fo {2}.ctg.fastq
+" ::: "${FILES[@]}" ::: "${BASES[@]}"
 
 echo "END TIME": '' $(date)
 ##

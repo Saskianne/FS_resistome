@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH -c 16                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
+#SBATCH -c 32                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
 #SBATCH --job-name=PhIX1
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
-#SBATCH --mem=50G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=PHIX1_FILTERED_ouputlog.out
 #SBATCH --error=PHIX1_FILTERED_errors.err
 #SBATCH --mail-user=slee@geomar.de
@@ -17,13 +17,16 @@ cd /gxfs_work/geomar/smomw681/DATA
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate Assembly
+dir1="/gxfs_work/geomar/smomw681/DATABASES"
+dir2="/gxfs_work/geomar/smomw681/DATA/QCed_DATA" 
+dir3="/gxfs_work/geomar/smomw681/DATA/PHIX_FILTERED"
+FILES=(${dir2}/*.qc.pe.R1.fq.gz)
+BASES=$(basename ${FILES[@]} ".qc.pe.R1.fq.gz")
 
-for sample in `ls /gxfs_work/geomar/smomw681/DATA/QCed_DATA/*.qc.pe.R1.fq.gz`;
+for base in ${BASES[@]};
     do
-    echo Start to working with $sample
-    dir1="/gxfs_work/geomar/smomw681/DATABASES"
-    dir2="/gxfs_work/geomar/smomw681/DATA/QCed_DATA"; base=$(basename $sample ".qc.pe.R1.fq.gz");
-    dir3="/gxfs_work/geomar/smomw681/DATA/PHIX_FILTERED"
+    echo Start to working with $base
+    # base=$(basename $sample ".qc.pe.R1.fq.gz");
     bbmap.sh ref=${dir1}/Phix174.fasta \
         in=${dir2}/${base}.qc.pe.R1.fq.gz \
         in2=${dir2}/${base}.qc.pe.R2.fq.gz \
