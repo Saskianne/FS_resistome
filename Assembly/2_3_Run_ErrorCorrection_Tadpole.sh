@@ -24,6 +24,7 @@ FILES=($dir1/*.qc.PE.unmapped.fq.gz)
 # Iterate through files in batches of 3
 for file in "${FILES[@]}"; 
 do
+
 echo Start error correction $file
 base=$(basename $file ".qc.PE.unmapped.fq.gz")
 sbatch --cpus-per-task=2 --mem=80G --time 2-00:00 --wrap="tadpole.sh \

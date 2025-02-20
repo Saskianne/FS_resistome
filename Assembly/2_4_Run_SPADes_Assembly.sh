@@ -9,7 +9,7 @@
 #SBATCH --error=SPADEs2_run_errors.err
 # here starts your actual program call/computation
 #
-cd /gxfs_work/geomar/smomw681/DATA
+cd /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate Assembly

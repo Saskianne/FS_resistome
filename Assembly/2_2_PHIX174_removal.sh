@@ -31,7 +31,7 @@ for base in ${FILES[@]}; do
         outm=${dir3}/${base}.qc.PE.mappedtoPHIX.fq.gz \
         outu=${dir3}/${base}.qc.PE.unmapped.fq.gz \
         threads=16 pairedonly=t pigz=t printunmappedcount=t timetag=t unpigz=t rebuild=f overwrite=f ordered=t tossbrokenreads=t; done
-    echo Finished the PHIX filtering of ${base}
+    echo Finished the PHIX removal of ${base}
 done
 
 echo "END TIME": '' $(date)
