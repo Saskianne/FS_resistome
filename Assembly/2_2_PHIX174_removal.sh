@@ -21,20 +21,18 @@ dir1="/gxfs_work/geomar/smomw681/DATABASES"
 dir2="/gxfs_work/geomar/smomw681/DATA/QCed_DATA" 
 dir3="/gxfs_work/geomar/smomw681/DATA/PHIX_FILTERED"
 FILES=(${dir2}/*.qc.pe.R1.fq.gz)
-BASES=$(basename ${FILES[@]} ".qc.pe.R1.fq.gz")
 
-for base in ${BASES[@]};
-    do
-    echo Start to working with $base
-    # base=$(basename $sample ".qc.pe.R1.fq.gz");
+for base in ${FILES[@]}; do
+    echo Start to working with ${base}
+    base=$(basename $sample ".qc.pe.R1.fq.gz");
     bbmap.sh ref=${dir1}/Phix174.fasta \
         in=${dir2}/${base}.qc.pe.R1.fq.gz \
         in2=${dir2}/${base}.qc.pe.R2.fq.gz \
         outm=${dir3}/${base}.qc.PE.mappedtoPHIX.fq.gz \
         outu=${dir3}/${base}.qc.PE.unmapped.fq.gz \
         threads=16 pairedonly=t pigz=t printunmappedcount=t timetag=t unpigz=t rebuild=f overwrite=f ordered=t tossbrokenreads=t; done
-    echo Finished the PHIX filtering of $base
-    done
+    echo Finished the PHIX filtering of ${base}
+done
 
 echo "END TIME": '' $(date)
 ##

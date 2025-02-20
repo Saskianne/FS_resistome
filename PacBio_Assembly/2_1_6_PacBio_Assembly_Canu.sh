@@ -25,7 +25,6 @@ FILES=($dir5/*_1.fastq.gz)
 
 # iterate over fastq files
 for fastq_file in "${FILES[@]}"; do
-    
      base=$(basename $fastq_file "_1.fastq.gz")
      sbatch --cpus-per-task=2 --mem=80G --time 5-00:00 \
           --wrap="canu -threads 4 -phred33 \

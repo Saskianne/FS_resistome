@@ -19,18 +19,17 @@ echo "START TIME": '' $(date)
 
 # Set up variables
 
-dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES"
+dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/wtdbg"
 dir5="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
 FILES=($dir5/*_1.fastq.gz)
-BASES= $(basename ${FILES} "_1.fastq.gz")
 
 # iterate over fastq files
 
 parallel -j 4 " \   
-     base=$(basename {1} '_1.fastq.gz'); \
-     wtdbg2 -x sq -t 8 -fo {2} -i {1} \
-     wtpoa-cns -t 8 -i {2}.ctg.lay.gz -fo {2}.ctg.fastq
-" ::: "${FILES[@]}" ::: "${BASES[@]}"
+     base=$(basename {} '_1.fastq.gz'); \
+     wtdbg2 -x sq -t 8 -fo ${base} -i {} && \
+     wtpoa-cns -t 8 -i ${base}.ctg.lay.gz -fo ${base}.ctg.fastq
+" ::: "${FILES[@]}"
 
 echo "END TIME": '' $(date)
 ##
