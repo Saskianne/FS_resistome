@@ -4,13 +4,13 @@
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
-#SBATCH --mem=150G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=PacBio_assem_wtdbg.out
-#SBATCH --error=PacBio_assem_wtdbg_err.err
+#SBATCH --mem=100G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --output=PacBio_assem_Canu_try.out
+#SBATCH --error=PacBio_assem_Canu_try.err
 
 # here starts your actual program call/computation
 #
-cd /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/wtdbg
+cd /gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate PacBio_Assembly
@@ -19,22 +19,18 @@ echo "START TIME": '' $(date)
 
 # Set up variables
 
-dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/wtdbg"
+dir4="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/Canu"
 dir5="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
-FILES=($dir5/*_1.fastq.gz)
-BASES=()
 
+cd /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/Canu
 # iterate over fastq files
-for file in "${FILES[@]}";do
-     base=$(basename "$file" '_1.fastq.gz')
-     BASES+=("$base")
-done
+     base=$(basename ERR13615510.fastq.gz ".fastq.gz")
 
+     sbatch --cpus-per-task=2 --mem=80G --time 2-00:00 \
+          --wrap="canu  \
+          -p ${base} genomeSize=7m -d ${dir4}/${base} \
+          -pacbio-raw ERR13615510.fastq.gz "
 
-parallel -j 4 ' \  
-     wtdbg2 -x sq -t 8 -fo {2} -i {1} && \
-     wtpoa-cns -t 8 -i {2}.ctg.lay.gz -fo {2}.ctg.fastq ' \
-::: "${FILES[@]}" ::: "${BASES[@]}"
 
 echo "END TIME": '' $(date)
 ##
