@@ -58,3 +58,4 @@ General understanding:
 - general bash & shell: https://www.gnu.org/software/bash/manual/bash.html#Installing-Bash
 - Bacterial genome assembly guide of Ryan Wick guy: https://rrwick.github.io/2020/10/30/guide-to-bacterial-genome-assembly.html
     - I really love his documentation style
+- Data Analytics guide for beginner: https://www.earthdatascience.org/courses/intro-to-earth-data-science/file-formats/use-text-files/format-text-with-markdown-jupyter-notebook/

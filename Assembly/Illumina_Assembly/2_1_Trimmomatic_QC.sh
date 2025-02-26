@@ -30,7 +30,13 @@ for fastq_file in "${FILES[@]}"; do
           ${dir5}/${base}_1.fastq.gz ${dir5}/${base}_2.fastq.gz \
           ${dir4}/${base}.qc.pe.R1.fq.gz ${dir4}/${base}.qc.se.R1.fq.gz \
           ${dir4}/${base}.qc.pe.R2.fq.gz ${dir4}/${base}.qc.se.R2.fq.gz \
-          ILLUMINACLIP:${dir3}/Complete_Adapter_Primer_info.fa:4:30:10 LEADING:25 TRAILING:25 SLIDINGWINDOW:4:20 MINLEN:40"
+          ILLUMINACLIP:${dir3}/Complete_Adapter_Primer_info.fa:4:30:10 LEADING:25 TRAILING:25 SLIDINGWINDOW:4:20 MINLEN:40" 
+          # ILLUMINACLIP: cut adapter and other illumina-specific seq from the read
+          # LEADING: Cut bases off the start of a read, if below a threshold quality
+          # TRAILING: Cut bases off the end of a read, if below a threshold quality
+          # SLIDINGWINDOW: Performs a sliding window trimming approach. It starts scanning at the 5‟ end and clips the read once the average quality within the window falls below a threshold.
+          # MINLEN: drop the read if it is below a specified length
+          # -phred33 convert quality score to Phred-33
 done
 
 echo "END TIME": '' $(date)
