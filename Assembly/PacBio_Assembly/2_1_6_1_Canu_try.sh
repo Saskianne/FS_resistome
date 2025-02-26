@@ -24,12 +24,10 @@ dir5="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
 
 cd /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/Canu
 # iterate over fastq files
-     base=$(basename ERR13615510.fastq.gz ".fastq.gz")
+base=$(basename ${dir5}/ERR13615510.fastq.gz ".fastq.gz")
 
-     sbatch --cpus-per-task=2 --mem=80G --time 2-00:00 \
-          --wrap="canu  \
-          -p ${base} genomeSize=7m -d ${dir4}/${base} \
-          -pacbio-raw ERR13615510.fastq.gz "
+canu  -p ${base} -d ${dir4}/${base} genomeSize=7m -pacbio-raw ${dir5}/ERR13615510.fastq.gz
+
 
 
 echo "END TIME": '' $(date)
