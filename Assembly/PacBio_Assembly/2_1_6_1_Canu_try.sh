@@ -26,9 +26,8 @@ cd /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/Canu
 # iterate over fastq files
 base=$(basename ${dir5}/ERR13615510.fastq.gz ".fastq.gz")
 
-canu  -p ${base} -d ${dir4}/${base} masterMemory=50 masterThreads 16 \
+canu  -p ${base} -d ${dir4}/${base} minMemory=20 minThreads=8 \
     genomeSize=7m -pacbio-raw ${dir5}/ERR13615510.fastq.gz
-
 
 
 echo "END TIME": '' $(date)

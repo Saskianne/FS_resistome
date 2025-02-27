@@ -50,9 +50,15 @@ Bioinformatic tools:
     - MetaBat2
         - adaptive binning algorithm for microbial genome reconstruction from metagenome assemblies 
         - https://bitbucket.org/berkeleylab/metabat/src/master/
-    - prodigal
+    - Prodigal
+        - protein-coding gene prediction for prokaryotic genomes
+        - https://github.com/hyattpd/Prodigal
     - CheckM
-    - dREP
+        - 
+        - https://github.com/Ecogenomics/CheckM
+    - drep:
+        - 
+        - https://github.com/MrOlm/drep
     - gtbdtk
 
 - Resistome analysis
