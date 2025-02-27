@@ -4,7 +4,7 @@
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
-#SBATCH --mem=100G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=PacBio_assem_Canu_try.out
 #SBATCH --error=PacBio_assem_Canu_try.err
 
@@ -26,7 +26,8 @@ cd /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/Canu
 # iterate over fastq files
 base=$(basename ${dir5}/ERR13615510.fastq.gz ".fastq.gz")
 
-canu  -p ${base} -d ${dir4}/${base} genomeSize=7m -pacbio-raw ${dir5}/ERR13615510.fastq.gz
+canu  -p ${base} -d ${dir4}/${base} masterMemory=50 masterThreads 16 \
+    genomeSize=7m -pacbio-raw ${dir5}/ERR13615510.fastq.gz
 
 
 

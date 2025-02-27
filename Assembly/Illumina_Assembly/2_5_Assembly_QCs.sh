@@ -34,14 +34,14 @@ BASES=(basename ${FILES[@]} "_1.fastq.gz")
 # QC raw fastq files
 dir3="${dir1}/RAW_fastqc" # dir for QC result for raw fastq files
 
-fastqc --memory 2GB -f fastq -t 4 -noextract -o $dir3 ${FILES[@]}  
+fastqc --memory 10GB -f fastq -t 4 -noextract -o $dir3 ${FILES[@]}  
 multiqc -o ${dir3}/*_fastqc.zip -n RAW_fastqc_summary.txt ${dir3}   
 
 # QC trimmed fastq files
 dir4="/gxfs_work/geomar/smomw681/DATA/QCed_DATA"
 QC_FILES=(${dir4}/*.fq.gz)
 dir5="${dir1}/TRIM_fastqc"
-fastqc --memory 2GB -t 4 -noextract -o $dir5/${BASES[@]} ${QC_FILES[@]} 
+fastqc --memory 10GB -t 4 -noextract -o $dir5/${BASES[@]} ${QC_FILES[@]} 
 multiqc -o ${dir5}/${BASES[@]}/*fastqc.zip -n TRIM_fastqc_summary.txt       
 
 
@@ -49,24 +49,24 @@ multiqc -o ${dir5}/${BASES[@]}/*fastqc.zip -n TRIM_fastqc_summary.txt
 dir6="/gxfs_work/geomar/smomw681/DATA/PHIX_FILTERED"
 FILTERED_FILES=(${dir6}/*.unmapped.fq.gz)
 dir7="${dir1}/FILTER_fastqc"
-fastqc --memory 2GB -t 4 -noextract -o ${dir7}/${BASES[@]} ${QC_FILES[@]} 
-multiqc -o ${dir7}/${BASES[@]}/*fastqc.zip -n FILTER_fastqc_summary.txt 
+fastqc --memory 10GB -t 4 -noextract -o ${dir7}/${BASES[@]} ${QC_FILES[@]} 
+multiqc -o ${dir7}/*fastqc.zip -n FILTER_fastqc_summary.txt ${dir7}/${BASES[@]}
 
 # QC error-corrected fastq files
 dir8="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
 dir9="${dir1}/CORRECTION_fastqc"
-fastqc --memory 2GB -t 4 -noextract -o $dir9 $dir8/*.fq.gz 
-multiqc -o ${dir9}/*fastqc.zip -n CORRECTION_fastqc_summary.txt 
+fastqc --memory 10GB -t 4 -noextract -o $dir9 $dir8/*.fq.gz 
+multiqc -o ${dir9}/*fastqc.zip -n CORRECTION_fastqc_summary.txt $dir9
 
-#QC assembled fastq files    
+# QC assembled fastq files    
 dir10="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES"
-dir11="$dir1/ASSEMBLY_fastqc"    
-fastqc --memory 2GB -t 4 -noextract -o $dir11 $dir10//*.fq.gz 
-multiqc -o ${dir11}/*fastqc.zip -n CORRECTION_fastqc_summary.txt 
+ASSEM_DIR=($dir10/*_SPADessembly)
+ASSEM_QC_DIR=$(basename ${ASSEM_DIR[@]} "_SPADessembly")
+dir11="${dir1}/ASSEMBLY_fastqc"    
+fastqc --memory 10GB -t 4 -noextract -o $dir11/${ASSEM_QC_DIR[@]} ${ASSEM_DIR[@]}/scaffolds.fasta 
+multiqc -o ${dir11}/*fastqc.zip -n ASSEMBLY_fastqc_summary.txt ${dir11}/${ASSEM_QC_DIR[@]}
 
-
-exit
-
+# exit
 
 
 echo "END TIME": '' $(date)
