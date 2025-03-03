@@ -31,8 +31,8 @@ if (!$min_contig_size) {
   print "please provide valid minimum contig size, such as \"300\"\n";
 }
 
-($fileBaseName, $dirName, $fileExtension) = fileparse($input_file, ('\.fa') );
-my $outputfile = $fileBaseName.'_min'.$min_contig_size.$fileExtension;
+($fileBaseName, $dirName, $fileExtension) = fileparse($input_file, qr/\.(fa|fasta)$/);
+my $outputfile = $fileBaseName.'_min'.$min_contig_size.".fasta";
 
 open (INFILE, $input_file) || die "Can't open input file. Please provide a valid input filename with .fa extension.\n";
 open (OUTFILE, "> $outputfile") || die "Can't open output file.\n";
