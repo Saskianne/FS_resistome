@@ -4,9 +4,9 @@
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
-#SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=SPADEs2_logouput.out
-#SBATCH --error=SPADEs2_run_errors.err
+#SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --output=SPADEs3_logouput.out
+#SBATCH --error=SPADEs3_run_errors.err
 # here starts your actual program call/computation
 #
 cd /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES
@@ -19,7 +19,7 @@ echo "START TIME": '' $(date)
 # Set up variables
 READS_DIR="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
 ASSEMBLY_DIR="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES"
-FILES=($READS_DIR/*.qc.ec.PE.fq.gz)
+FILES=($READS_DIR/SRR15145660.qc.ec.PE.fq.gz $READS_DIR/SRR15145661.qc.ec.PE.fq.gz $READS_DIR/SRR15145662.qc.ec.PE.fq.gz $READS_DIR/SRR15145663.qc.ec.PE.fq.gz $READS_DIR/SRR15145664.qc.ec.PE.fq.gz $READS_DIR/SRR15145666.qc.ec.PE.fq.gz $READS_DIR/SRR23378604.qc.ec.PE.fq.gz $READS_DIR/SRR23378605.qc.ec.PE.fq.gz, $READS_DIR/SRR6667231.qc.ec.PE.fq.gz)
 
 # Iterate through files in batches of 2
 for file in "${FILES[@]}"
@@ -40,7 +40,7 @@ for file in "${FILES[@]}"
         fi
 
         # Submit the SPAdes job with the calculated memory and CPUs
-        sbatch --cpus-per-task=$cpus --mem-per-cpu=$mem_per_cpu --wrap="spades.py -t $cpus -m $(( ${mem_per_cpu%G} * cpus )) -k 21,33,55,71,99,113,127 --meta --only-assembler --12 ${READS_DIR}/${base}.qc.ec.PE.fq.gz -o ${ASSEMBLY_DIR}/${base}_SPADessembly"
+        sbatch --cpus-per-task=$cpus --mem-per-cpu=$mem_per_cpu -t 2-00:00 --wrap="spades.py -t $cpus -m $(( ${mem_per_cpu%G} * cpus )) -k 21,33,55,71,99,113,127 --meta --only-assembler --12 ${READS_DIR}/${base}.qc.ec.PE.fq.gz -o ${ASSEMBLY_DIR}/${base}_SPADessembly"
         echo The SPAdes assembly batch for $file submitted at $(date)
     done
 
