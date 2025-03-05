@@ -9,14 +9,16 @@
 #
 
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/MIN500bp_CONTIGs
+filtered file
 
 echo "START TIME": '' 'date'
-for i in /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/*_SPADessembly/*.fasta
-do
+for i in /gxfs_work/geomar/smomw681/DATA/ASSEMBLIES/*_SPADessembly/*.fasta;
+if [ -f $(basename $i) ]; then
+     do
      echo working with $i
      newfile="$(basename $i _filterd.fasta)"; /
      base=$(basename $i ".fasta"); /
      perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_filter_contigs_on_size.pl $i 500
-done
+     done
 echo "END TIME": '' 'date'
 ##

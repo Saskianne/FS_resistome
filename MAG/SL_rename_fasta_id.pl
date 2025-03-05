@@ -165,7 +165,7 @@ my $VERSION = 0.1;
 my ($Opt_Version, $Opt_Help);
 GetOptions ('input=s' => \$Input_File,
             'pattern=s' => \$Pattern,
-            'replacement=s' => \\$Replacement,
+            'replacement=s' => \$Replacement,
             'case-insensitive' => \$Opt_Case,
             'global' => \$Opt_Global,
             'numerate' => \$Opt_Numerate,
@@ -229,25 +229,29 @@ exit;
 ### Subroutine to rename headers/ID lines of the FASTA file
 sub substitute_string {
     my $string = shift;
-    $string =~ s/^>//; # get rid of '>', append afterwards
+    $string =""; # get rid of '>', append afterwards
 
     print STDERR "$string " if ($Opt_Output); # optional verbose output to STDERR
     $Substitution_Count++; # count occurences of carried out substitutions
 
-    # substitutions
-    if ($Opt_Global && $Opt_Case) {
-        $string =~ s/$Replacement/gi;
-    } elsif ($Opt_Case) {
-        $string =~ s/$Replacement/i;
-    } elsif ($Opt_Global) {
-        $string =~ s/$Replacement/g;
-    } else {
-        $string =~ s/$Replacement/;
-    }
+    # # substitutions
+    # if ($Opt_Global && $Opt_Case) {
+    #     $string =~ s/.*/$Replacement/gi;
+    # } elsif ($Opt_Case) {
+    #     $string =~ s/.*/$Replacement/i;
+    # } elsif ($Opt_Global) {
+    #     $string =~ s/.*/$Replacement/g;
+    # } else {
+    #     $string =~ s/.*/$Replacement/;
+    # }
 
     # output to STDOUT, optionally STDERR
-    print ">$string";
+    print ">";
     print STDERR "-> $string" if ($Opt_Output);
+
+
+    print "$Replacement";
+    print STDERR "$Replacement" if ($Opt_Output);
 
     if ($Append) {
         print "$Append";
