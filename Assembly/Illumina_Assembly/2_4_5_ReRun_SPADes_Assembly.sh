@@ -24,7 +24,8 @@ ASSEMBLY_DIR="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES"
 # base=("${READS_DIR}/SRR15145662" "${READS_DIR}/SRR15145666")
 
 echo start to run SPAdes assembly
-spades.py -t 8 -m 250 -k 21,33,55,71,99,113,127 --meta --only-assembler --12 /gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED/SRR15145666.qc.ec.PE.fq.gz -o ${ASSEMBLY_DIR}/SRR15145666_SPADessembly
+# spades.py -t 8 -m 250 -k 21,33,55,71,99,113,127 --meta --only-assembler --12 /gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED/SRR15145666.qc.ec.PE.fq.gz -o ${ASSEMBLY_DIR}/SRR15145666_SPADessembly
+spades.py -t 3 -m 250 -k 21,33,55,71,99,113,127 --restart-from last -o ${ASSEMBLY_DIR}/SRR15145666_SPADessembly
 
 # End the job
 echo "END TIME": '' $(date)
