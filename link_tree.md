@@ -21,6 +21,8 @@ Bioinformatic tools:
 
 - Assembly
     - metaSPAdes (bioconda::spades, v4.0.0)
+        - https://ablab.github.io/spades/
+    
     - Trimmomatric (bioconda::trimmomatic, v0.39)
     - bbmap (bioconda::bbmap, v39.15)
 

@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH -c 16                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
+#SBATCH -c 2                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
 #SBATCH --job-name=Spd2
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
-#SBATCH --mem=100G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=250G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=SPADEs5_logouput.out
 #SBATCH --error=SPADEs5_run_errors.err
 # here starts your actual program call/computation
@@ -24,7 +24,7 @@ FILES=("SRR15145662.qc.ec.PE.fq.gz" "SRR15145666.qc.ec.PE.fq.gz")
 base=("${READS_DIR}/SRR15145662" "${READS_DIR}/SRR15145666")
 
 echo start to run SPAdes assembly
-spades.py -t 8 --memory 50 -k 21,33,55,71,99,113,127 --meta --only-assembler --12 /gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED/SRR15145662.qc.ec.PE.fq.gz -o SRR15145662_SPADessembly
+spades.py -t 3 -m 250 -k 21,33,55,71,99,113,127 --meta --only-assembler --12 /gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED/SRR15145662.qc.ec.PE.fq.gz -o ${ASSEMBLY_DIR}/SRR15145662_SPADessembly
 
 # End the job
 echo "END TIME": '' $(date)
