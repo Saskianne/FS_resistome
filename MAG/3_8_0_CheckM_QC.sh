@@ -27,9 +27,9 @@ CheckM2_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/CheckM2"
 for MAG in ${METABAT2_FILEs}/*.metabat2.proksbin; 
 do
 base=$(basename $MAG .metabat2.proksbin)
-if [ ! -f ${CheckM2_OUTPUTs}/]${base}.
+if [ ! -f ${CheckM2_OUTPUTs}/${base}.****]
 sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
-     --job-name=checkM2 --output=METABAT2_${base}.out\
+     --job-name=checkM2 --output=CheckM2_${base}.out\
      --wrap="checkm2 predict \
      --threads 16 \
      --extension fa \

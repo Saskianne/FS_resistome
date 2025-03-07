@@ -20,6 +20,13 @@ perlbrew switch perl-5.38.0
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/PROKS
 PROKS_CONTIG_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/PROKS"
 
+echo start creating a stats file for prokaryotic contigs
+
+perl SL_Fasta_Files_stats_2024_version.pl \
+${PROKS_CONTIG_DIR} > "FS_proks_Statistics.xls"
+
+echo finished creating a stat file for prokaryotic contigs
+
 # input 1 = input folder
 # input 2 = cutoff_length (default 0)
 # output _Statistics.xls file with 
