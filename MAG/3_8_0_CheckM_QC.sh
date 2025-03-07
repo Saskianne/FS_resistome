@@ -10,30 +10,30 @@
 #SBATCH --mail-type=END           # Type of email notification- BEGIN,END,FAIL,ALL
 #SBATCH --mail-user=dngugi@geomar.de  # Email to which notifications will be sent
 # here starts your actual program call/computation
-#
+
+######################
+## run checkm
+##########################
+
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate METABAT2
+
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2
-
-CONTIG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/PROKS"
-BAM_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/BAMFILEs"
-COV_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/COVERAGE_FILEs"
 METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2"
+CheckM2_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/CheckM2"
 
-echo "START TIME": '' $(date)
-for sample in ${CONTIG_FILEs}/*_contigs_min500_Proks.fna;
+
+for MAG in ${METABAT2_FILEs}/*.metabat2.proksbin; 
 do
-base=$(basename $sample "_contigs_min500_Proks.fna");
-if [ ! -f ${METABAT2_FILEs}/${base}.metabat2.proksbin]; then
-metabat2 -t 6 -m 1500 \
-     -a ${COV_FILEs}/${base}.depth.txt \
-     -o ${MetaBatFiles}/${base}.metabat2.proksbin \
-     -i ${CONTIG_Files}/${base}_contigs_min500_Proks.fna; 
-else 
-     echo "File exists: ${base}.metabat2.proksbin";
-fi     
-done
+base=$(basename $MAG .metabat2.proksbin)
+if [ ! -f ${CheckM2_OUTPUTs}/]${base}.
+sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
+     --job-name=checkM2 --output=METABAT2_${base}.out\
+     --wrap="checkm2 predict \
+     --threads 16 \
+     --extension fa \
+     --input ${METABAT2_FILES}/*.metabat2.proksbin \
+     --output-directory ${CheckM2_OUTPUTs}/"
 
-echo "END TIME": '' $(date)
-##
+#

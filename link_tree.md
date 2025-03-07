@@ -44,24 +44,32 @@ Bioinformatic tools:
         - https://github.com/ziyewang/MetaAssemblyEval
 
 
-- MAG construction
+- Prep and analysis of MAG
     - DeepMicroClass: 
         - deep-learning-based sequence classifier (for metagenomic contigs)        
             - classified into viruses infecting prokaryotic or eukaryotic hosts, eukaryotic or prokaryotic chromosomes, plasmid
         - https://github.com/chengsly/DeepMicroClass
-    - MetaBat2
-        - adaptive binning algorithm for microbial genome reconstruction from metagenome assemblies 
-        - https://bitbucket.org/berkeleylab/metabat/src/master/
+
     - Prodigal
         - protein-coding gene prediction for prokaryotic genomes
         - https://github.com/hyattpd/Prodigal
-    - CheckM
-        - 
-        - https://github.com/Ecogenomics/CheckM
+
+    - gtbdtk
+        - https://ecogenomics.github.io/GTDBTk/
+
+- MAG construction and check
+    - MetaBat2
+        - adaptive binning algorithm for microbial genome reconstruction from metagenome assemblies 
+        - https://bitbucket.org/berkeleylab/metabat/src/master/
+    - CheckM2 (v1.1.0)
+        - check the quality of MAGs, 
+        - Criteria min completeness 50% and contamination under 5%
+        - https://github.com/chklovski/CheckM2
     - drep:
         - 
         - https://github.com/MrOlm/drep
-    - gtbdtk
+    - CoverM
+        - https://github.com/wwood/CoverM
 
 - Resistome analysis
     - AntiSMASH (bioconda::antismash, v7.1.0)
