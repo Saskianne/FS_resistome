@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH -c 16                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
+#SBATCH -c 32                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
 #SBATCH --job-name=BBMap_SortBAM
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
-#SBATCH --mem=220G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=BBmap_SortBAM3.out
 #SBATCH --error=BBmap_SortBAM3.err
 # here starts your actual program call/computation
@@ -65,14 +65,14 @@ echo start regenarating coverage file at $(date)
 conda activate MAG
 
 COV_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/ALL_COVs"
-for sample in ${BAM_FILEs}/*.out_sorted.bam;
+for sample in ${BAM_FILEs}/*.out.sorted.bam;
 do
+base=$(basename $sample ".out.sorted.bam")
 if [ ! -f ${COV_Files}/${base}.depth.txt ]; then
-    base=$(basename $sample ".out_sorted.bam")
     jgi_summarize_bam_contig_depths \
         --outputDepth ${COV_Files}/${base}.depth.txt \
         --pairedContigs ${COV_Files}/${base}.paired.txt \
-        ${BAM_FILEs}/${base}.out_sorted.bam \
+        ${BAM_FILEs}/${base}.out.sorted.bam \
         --referenceFasta ${ALL_CONTIGs}/${base}_contigs_min500_renamed.fasta; 
     echo .depth.txt file for $base is now has been created
 else
