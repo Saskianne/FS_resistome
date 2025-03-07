@@ -65,10 +65,10 @@ echo start regenarating coverage file at $(date)
 conda activate MAG
 
 COV_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/COVERAGE_FILEs"
-for sample in ${BAM_FILEs}/*.out.sorted.bam;
+for sample in ${BAM_FILEs}/*.out_sorted.bam;
 do
 if [ ! -f ${COV_Files}/${base}.depth.txt ]; then
-    base=$(basename $sample ".out.sorted.bam")
+    base=$(basename $sample ".out_sorted.bam")
     jgi_summarize_bam_contig_depths \
         --outputDepth ${COV_Files}/${base}.depth.txt \
         --pairedContigs ${COV_Files}/${base}.paired.txt \

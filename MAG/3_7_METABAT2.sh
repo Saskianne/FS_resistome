@@ -22,17 +22,18 @@ COV_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/COVERAGE_FILEs"
 METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2"
 
 echo "START TIME": '' $(date)
-for sample in /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/PROKS/*_contigs_min500bp_Proks.fna;
+for sample in ${CONTIG_FILEs}/*_contigs_min500_Proks.fna;
 do
-base=$(basename $sample "_contigs_min500bp_Proks.fna");
-if [ !]
-MetaBatFiles="/gxfs_work/geomar/smomw647/PROJECTS/SPONGEMicrobiome/DEEPMicroClass/METABAT2_EUKS/MetaBAT2_BINS_Oct242024_234metaGs"; 
-CONTIGFiles="/gxfs_work/geomar/smomw647/PROJECTS/SPONGEMicrobiome/DEEPMicroClass/CLASS_CONTIGs/EUKS"; base=$(basename $sample ".SPADessembly.min500bp.Euks.fna");
-COVFiles="/gxfs_work/geomar/smomw647/PROJECTS/SPONGEMicrobiome/DEEPMicroClass/METABAT2_EUKS/COVERAGE_FILEs_1"
-metabat2 -t 16 -m 1500 \
-     -a ${COVFiles}/${base}.depth.txt \
-     -o ${MetaBatFiles}/${base}.metabat2.eukbin \
-     -i ${CONTIG_Files}/${base}.SPADessembly.min500bp.Euks.fna; done
+base=$(basename $sample "_contigs_min500_Proks.fna");
+if [ ! -f ${METABAT2_FILEs}/${base}.metabat2.proksbin ]; then
+metabat2 -t 6 -m 1500 \
+     -a ${COV_FILEs}/${base}.depth.txt \
+     -o ${MetaBatFiles}/${base}.metabat2.proksbin \
+     -i ${CONTIG_Files}/${base}_contigs_min500_Proks.fna; 
+else 
+     echo "File exists: ${base}.metabat2.proksbin";
+fi     
+done
 
 echo "END TIME": '' $(date)
 ##
