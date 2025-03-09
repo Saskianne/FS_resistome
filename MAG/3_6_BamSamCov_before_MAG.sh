@@ -68,11 +68,11 @@ COV_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/COVERAGE_FILEs"
 for sample in ${BAM_FILEs}/*.out_sorted.bam;
 do
 if [ ! -f ${COV_Files}/${base}.depth.txt ]; then
-    base=$(basename $sample ".out_sorted.bam")
+    base=$(basename $sample ".out.sorted.bam")
     jgi_summarize_bam_contig_depths \
         --outputDepth ${COV_Files}/${base}.depth.txt \
         --pairedContigs ${COV_Files}/${base}.paired.txt \
-        ${BAM_FILEs}/${base}.out_sorted.bam \
+        ${BAM_FILEs}/${base}.out.sorted.bam \
         --referenceFasta ${PROK_CONTIGs}/${base}_contigs_min500_Proks.fna; 
     echo .depth.txt file for $base is now has been created
 else
