@@ -20,23 +20,25 @@ conda activate Assembly
 
 PROK_CONTIGs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/PROKS"
 EC_READs="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
-Proks_mapped="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/MAG_Illumina/PROKS_mapped"
+Proks_mapped="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PROKS_mapped"
 
 echo starting bbmap for proks_bp at $(date)
 for sample in ${EC_READs}/*.qc.ec.PE.fq.gz;
 do
     base=$(basename $sample ".qc.ec.PE.fq.gz")
-    if [ ! -f ${BAM_FILEs}/${base}.out.bam ]; then
+    if [ ! -f ${Proks_mapped}/${base}.EC_Proks_mapped.fq.gz ]; then
         echo working on $sample 
         bbmap.sh \
             ref=${PROK_CONTIGs}/${base}_contigs_min500_Proks.fna \
             in=${EC_READs}/${base}.qc.ec.PE.fq.gz \
-            outm=${BAM_FILEs}/${base}.EC_Proks_mapped.fq.gz \
+            outm=${Proks_mapped}/${base}.EC_Proks_mapped.fq.gz \
             threads=16 pairedonly=t pigz=t \
             printunmappedcount=t timetag=t unpigz=t rebuild=f overwrite=f ordered=t tossbrokenreads=t; 
         echo .mapped.fq.gz file for $base is now has been created
+    elif [ -f ${Proks_mapped}/${base}.EC_Proks_mapped.fq.gz ]; then
+        echo "mapped.fq.gz file $sample already exist"
     else
-        echo "mapped.fq file $sample already exist"
+        echo "mapped.fq file $sample: something went wrong"
     fi
 done
 
