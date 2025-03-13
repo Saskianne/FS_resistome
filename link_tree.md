@@ -78,6 +78,8 @@ Bioinformatic tools:
         - conda-forge::libsass=0.22.0
         - python=3.10
     - DeepARG (bioconda::deeparg, v1.0.4)
+    - DeepBGC (v0.1.31)
+        - https://github.com/Merck/deepbgc
     
 
 
