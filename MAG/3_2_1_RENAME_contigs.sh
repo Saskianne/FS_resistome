@@ -51,4 +51,4 @@ do
      fi
 done
 
-echo "END TIME": '' $(date) vbv      
+echo "END TIME": '' $(date)     

@@ -12,13 +12,12 @@
 
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
-conda activate DeepARG
+conda activate DeepBGC
 
 
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL
 GENOME_Jutta="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/GENOME_Jutta"
 ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/STRAINs_PRODIGAL"
-DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepARGs"
 DeepBGCsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepBGCs"
 
 echo "START TIME": '' $(date)
@@ -31,8 +30,7 @@ for file in ${GENOME_Jutta}/*.fasta ; do
 base=$(basename $file ".fasta")
 newfile="$(basename $file .fasta)"
 deepbgc pipeline \
-     --score 0.5 \
-     --prodigal-single-mode \
+     --score 0.5  \
      --output ${DeepBGCsDIR}/${base}/ \
     $file ; 
 done
