@@ -13,7 +13,7 @@ echo "START TIME": '' $(date)
 
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
-conda activate Assembly
+# conda activate Assembly
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/BAMFILEs
 
 
@@ -39,27 +39,27 @@ BAM_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/BAMFILEs/ALL_BA
 #     fi
 # done
 
-echo bbmap completed at $(date)
-echo starting with samtools sort at $(date)
+# echo bbmap completed at $(date)
+# echo starting with samtools sort at $(date)
 
-for sample in ${BAM_FILEs}/*.out.bam;
-do
-base=$(basename $sample ".out.bam")
-if [ ! -f ${BAM_FILEs}/${base}.out.sorted.bam ]; then
-    echo working on $base
-    samtools sort \
-        -o ${BAM_FILEs}/${base}.out.sorted.bam \
-        --output-fmt BAM \
-        --threads 16 \
-        --reference ${ALL_CONTIGs}/${base}_contigs_min500_renamed.fasta \
-        $sample; 
-    echo .sorted.bam file for $base is now has been created
-else
-    echo "BAM file $sample already exist"
-fi
-done
+# for sample in ${BAM_FILEs}/*.out.bam;
+# do
+# base=$(basename $sample ".out.bam")
+# if [ ! -f ${BAM_FILEs}/${base}.out.sorted.bam ]; then
+#     echo working on $base
+#     samtools sort \
+#         -o ${BAM_FILEs}/${base}.out.sorted.bam \
+#         --output-fmt BAM \
+#         --threads 16 \
+#         --reference ${ALL_CONTIGs}/${base}_contigs_min500_renamed.fasta \
+#         $sample; 
+#     echo .sorted.bam file for $base is now has been created
+# else
+#     echo "BAM file $sample already exist"
+# fi
+# done
 
-echo samtools sort completed at $(date)
+# echo samtools sort completed at $(date)
 echo start regenarating coverage file at $(date)
 
 conda activate MAG

@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH -c 3                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
+#SBATCH -c 2                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
 #SBATCH --job-name=ExProks
 #SBATCH -t 9-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
-#SBATCH --mem=50G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=DMCExctract1_ouputlog_Proks.out
-#SBATCH --error=DMCExctract1_errors_Proks.err
+#SBATCH --mem=100G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --output=Assem_all_3.out
+#SBATCH --error=Assem_all_3.err
 # here starts your actual program call/computation
 
 ## STEP 6
@@ -28,7 +28,7 @@ echo "START TIME": '' $(date)
 echo start to extract Prokaryote contigs
 for i in ${CONTIG_Dir}/*_contigs_min500_renamed.fasta;
 do
-file=$(basename $i "renamed.fasta");
+file=$(basename $i "_renamed.fasta");
 if [ ! -f ${OUTPUTDir}/${file}_Proks.fna ]; then
     echo working with $i
     base=$(basename $i "_contigs_min500_renamed.fasta");
