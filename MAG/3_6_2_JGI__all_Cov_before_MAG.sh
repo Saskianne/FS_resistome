@@ -13,6 +13,7 @@ echo "START TIME": '' $(date)
 
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
+module load gcc/12.3.0
 # conda activate Assembly
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/BAMFILEs
 
@@ -62,7 +63,7 @@ BAM_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/BAMFILEs/ALL_BA
 # echo samtools sort completed at $(date)
 echo start regenarating coverage file at $(date)
 
-conda activate MAG
+conda activate METABAT2
 
 COV_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/ALL_COVs"
 for sample in ${BAM_FILEs}/*.out.sorted.bam;
