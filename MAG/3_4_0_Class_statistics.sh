@@ -34,5 +34,8 @@ echo finished creating a stat file for prokaryotic contigs
 
 
 
+cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PROKS_mapped
+PROKS_MAPPED_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PROKS_mapped"
 
-
+perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/Fasta_Files_stats_2024_version.pl \
+${PROKS_CONTIG_DIR} > "FS_proks_Statistics.xls"

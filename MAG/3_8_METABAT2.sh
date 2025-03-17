@@ -28,7 +28,7 @@ base=$(basename $sample "_contigs_min500_Proks.fna");
 if [ ! -f ${METABAT2_FILEs}/${base}.metabat2.proksbin ]; then
 metabat2 -t 6 -m 1500 \
      -a ${COV_FILEs}/${base}.depth.txt \
-     -o ${MetaBatFiles}/${base}.metabat2.proksbin \
+     -o ${METABAT2_FILEs}/${base}.metabat2.proksbin.fasta \
      -i $sample ; 
 elif [ -f ${METABAT2_FILEs}/${base}.metabat2.proksbin ]; then 
      echo "File exists: ${base}.metabat2.proksbin";
