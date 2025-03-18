@@ -11,9 +11,9 @@ METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/PROKS_BIN"
 CheckM2_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/CheckM2"
 
 
-for MAG in ${METABAT2_FILEs}/*.metabat2.proksbin.fasta.*.fa; 
-do
-base=$(basename $MAG .metabat2.proksbin.fasta.*.fa)
+#for MAG in ${METABAT2_FILEs}/*.metabat2.proksbin.fasta.*.fa; 
+#do
+#base=$(basename $MAG .metabat2.proksbin.fasta.*.fa)
 # if [ ! -f ${CheckM2_OUTPUTs}/${base}.****]
 sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
      --job-name=checkM2 --output=CheckM2_proksbin.out --error=CheckM2_proksbin.err\
@@ -22,7 +22,8 @@ sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
      --extension fa \
      --input ${METABAT2_FILEs}/ \
      --output-directory ${CheckM2_OUTPUTs}/"
-done
+#done
+
 #
 
 ######################################## 
