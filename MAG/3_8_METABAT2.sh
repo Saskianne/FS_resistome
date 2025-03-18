@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -c 16                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
+#SBATCH -c 4                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
 #SBATCH --job-name=MetaBat2
 #SBATCH -t 9-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
@@ -19,13 +19,13 @@ cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2
 CONTIG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/PROKS"
 BAM_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/BAMFILEs"
 COV_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/COVERAGE_FILEs"
-METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2"
+METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/PROKS_BIN"
 
 echo "START TIME": '' $(date)
 for sample in ${CONTIG_FILEs}/*_contigs_min500_Proks.fna;
 do
 base=$(basename $sample "_contigs_min500_Proks.fna");
-if [ ! -f ${METABAT2_FILEs}/${base}.metabat2.proksbin ]; then
+if [ ! -f ${METABAT2_FILEs}/${base}.metabat2.proksbin.* ]; then
 metabat2 -t 6 -m 1500 \
      -a ${COV_FILEs}/${base}.depth.txt \
      -o ${METABAT2_FILEs}/${base}.metabat2.proksbin.fasta \
