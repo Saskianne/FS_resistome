@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
 #SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=BBmap_proks_bp.out
-#SBATCH --error=BBmap_proks_bp.err
+#SBATCH --output=BBmap_proks_bp2.out
+#SBATCH --error=BBmap_proks_bp2.err
 #SBATCH --mail-user=slee@geomar.de
 #SBATCH --mail-type=ALL
 # here starts your actual program call/computation

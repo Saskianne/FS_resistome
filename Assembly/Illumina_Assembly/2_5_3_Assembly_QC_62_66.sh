@@ -27,11 +27,11 @@ dir2="/gxfs_work/geomar/smomw681/DATA/RAWDATA" # dir with raw fastq files
 FILES=($dir2/SRR15145662_1.fastq.gz)
 BASES=(basename ${FILES[@]} "_1.fastq.gz")
 
-## QC error-corrected fastq files
-dir8="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
-dir9="${dir1}/CORRECTION_fastqc"
-fastqc --memory 10GB -f fastq -t 4 -noextract -o $dir9 ${dir8}/SRR15145662.*.fq.gz 
-multiqc --force -o ${dir9} -n CORRECTION_fastqc_summary -i CORRECTION_fastqc_summary ${dir9}
+# ## QC error-corrected fastq files
+# dir8="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
+# dir9="${dir1}/CORRECTION_fastqc"
+# fastqc --memory 10GB -f fastq -t 4 -noextract -o $dir9 ${dir8}/SRR15145662.*.fq.gz 
+# multiqc --force -o ${dir9} -n CORRECTION_fastqc_summary -i CORRECTION_fastqc_summary ${dir9}
 
 ## QC assembled fastq files    
 # run renaming script before QC
@@ -39,8 +39,8 @@ dir10="/gxfs_work/geomar/smomw681/DATA/ASSEMBLIES"
 ASSEM_DIR=(${dir10}/*_SPADessembly)
 # ASSEM_QC_DIR=$(basename ${ASSEM_DIR[@]} "_SPADessembly")
 dir11="${dir1}/ASSEMBLY_fastqc"    
-fastqc --memory 10GB -f fastq -t 4 -noextract -o $dir11 ${ASSEM_DIR[@]}/SRR15145662_contigs.fasta 
-multiqc -o ${dir11} -n ASSEMBLY_fastqc_summary ${dir11}
+fastqc --memory 10G -f fastq -t 4 -noextract -o ${dir11} ${ASSEM_DIR}/*_contigs.fasta
+multiqc -o ${dir11} -n ASSEMBLY_fastqc_summary -i ASSEMBLY_fastqc_summary ${dir11}
 
 ## exit
 

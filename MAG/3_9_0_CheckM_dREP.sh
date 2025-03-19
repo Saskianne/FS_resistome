@@ -34,21 +34,25 @@ sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
 ## and removing all but the “best” genome from each redundant set.
 ########################################
 
-conda activate MAG
+conda activate METABAT2
 
 dRep check_dependencies
 ## install non-essential dependences
-#conda install bioconda::centrifuge 
-cd /gxfs_work/geomar/smomw681/METABAT2/
-wget https://gembox.cbcb.umd.edu/mash/RefSeqSketchesDefaults.msh.gz
-wget https://gembox.cbcb.umd.edu/mash/RefSeqSketchesDefaults.msh.gz
-tar -xvzf RefSeqSketchesDefaults.msh.gz
+# conda install bioconda::centrifuge 
+
+# cd /gxfs_work/geomar/smomw681/METABAT2/
+# wget https://gembox.cbcb.umd.edu/mash/RefSeqSketchesDefaults.msh.gz
+# wget https://gembox.cbcb.umd.edu/mash/RefSeqSketchesDefaults.msh.gz
+# tar -xvzf RefSeqSketchesDefaults.msh.gz
 
 dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN"
+METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/PROKS_BIN"
 
-sbatch -p base -c 17 -t 6-00:00 --qos=long --mem=250G --job-name=dREP \
+sbatch -p base -c 18 -t 10-00:00 --qos=long --mem=240G --job-name=dREP \
      --output=dREP.out --error=dREP.err \
-     --wrap="dRep dereplicate -p 6 \
+     --wrap="dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN"; \
+     METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/PROKS_BIN" ; \
+     dRep dereplicate -p 6 \
      ${dREP_FILEs}/ \
      -pa 0.9 -sa 0.95 -nc 0.3 \
      -l 50000 -comp 50 -con 5 \
