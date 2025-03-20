@@ -66,10 +66,13 @@ Bioinformatic tools:
         - Criteria min completeness 50% and contamination under 5%
         - https://github.com/chklovski/CheckM2
     - drep:
-        - 
+        - Dereplicate the MAGs before final mapping, identification and other downstream analysis
+        - https://drep.readthedocs.io/en/latest/module_descriptions.html
         - https://github.com/MrOlm/drep
     - CoverM
         - https://github.com/wwood/CoverM
+    - GTDB-TK:
+        - https://ecogenomics.github.io/GTDBTk/index.html
 
 - Resistome analysis
     - AntiSMASH (bioconda::antismash, v7.1.0)

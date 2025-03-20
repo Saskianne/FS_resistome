@@ -7,7 +7,7 @@ module load miniconda3/24.11.1
 conda activate METABAT2
 
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2
-METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/PROKS_BIN"
+METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/METABAT2_PROKS_BIN"
 CheckM2_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/CheckM2"
 
 
@@ -45,15 +45,20 @@ dRep check_dependencies
 # wget https://gembox.cbcb.umd.edu/mash/RefSeqSketchesDefaults.msh.gz
 # tar -xvzf RefSeqSketchesDefaults.msh.gz
 
-dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN"
-METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/PROKS_BIN"
+export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN"
+export METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/METABAT2_PROKS_BIN"
+
+module load gcc12-env/12.3.0
+module load miniconda3/24.11.1
+conda activate dRep
+module load gcc/12.3.0
+module load boost/1.83.0
+module load cmake/3.27.4
 
 sbatch -p base -c 18 -t 10-00:00 --qos=long --mem=240G --job-name=dREP \
      --output=dREP.out --error=dREP.err \
-     --wrap="dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN"; \
-     METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/PROKS_BIN" ; \
-     dRep dereplicate -p 6 \
-     ${dREP_FILEs}/ \
+     --wrap="dRep dereplicate -p 6 \
+     ${dREP_FILEs}/ --debug \
      -pa 0.9 -sa 0.95 -nc 0.3 \
      -l 50000 -comp 50 -con 5 \
      -ms 1000 --S_algorithm fastANI \
@@ -69,11 +74,15 @@ module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate MAG
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/
-GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/GTDBTK_PROKS"
+export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN"
+export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/GTDBTK_PROKS"
+export MASH_DB="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/MASH_DB"
 
 
-sbatch -p base -c 16 -t 6-00:00 --qos=long --mem=240G --job-name=GTDBTK1 --wrap="gtdbtk classify_wf \
+sbatch -p base -c 16 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK1 \
+     --output=GTDBTK.out --error=GTDBTK.err \
+     --wrap="gtdbtk classify_wf \
      --cpus 16 -x fa \
      --genome_dir ${dREP_FILEs}/ \
-     --mash_db /gxfs_work/geomar/smomw647/PROJECTS/SPONGEMicrobiome/DEEPMicroClass/METABAT2/MASH_DB/ \
-     --out_dir GTDBTK_PROKS"
+     --mash_db ${MASH_DB}/ \
+     --out_dir ${GTDBTK_OUTPUTs}/ "
