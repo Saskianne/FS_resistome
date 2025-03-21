@@ -75,7 +75,7 @@ module load miniconda3/24.11.1
 conda activate MAG
 module load gsl/2.7.1
 module load gcc/12.3.0
-cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/
+cd /gxfs_work/geomar/smomw681/DATA/
 
 export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN/dereplicated_genomes"
 export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/GTDBTK_PROKS"
@@ -90,15 +90,6 @@ sbatch -p base -c 16 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK1 \
      --mash_db ${MASH_DB}/ \
      --out_dir ${GTDBTK_OUTPUTs}/ "
 
-
-########################################
-## GENERATE COVERAGE INFORMATION for dereplicated genomes
-########################################
-## USE BBMAP.sh to map raw or error corrected reads to MAGs
-
-module load gcc12-env/12.3.0
-module load miniconda3/24.11.1
-conda activate Assembly
 
 
 
