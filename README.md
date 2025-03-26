@@ -15,14 +15,17 @@ Freshwater sponge symbiont resistome, along the Schwentine (M.Sc. Project)
     2.3. Preparation for the sampling and metagenome sequencing
 
 ### Relevant data/files:
+**Metagenomic data analysis**
 1. FastqDump: information about the downloaded raw sequencing data or MAG data
 2. Assembly: raw reads to contigs for Illumina and PacBio raw reads (in separated folders)
 3. & 4. MAG: contigs to MAG assembly(3), QC and few other basic information about the MAGs (4)
 5. ARG_analysis: downstream analysis for ARG detection in MAGs
 
+**Primer experiments**
 - Primer: few information about qPCR experiments
 - Juttas_strains: ARG analysis on the genomes of Jutta's AMR strains
 
+**Supporting data**
 - What_today.ipynb: everyday progress during the internship (and also Master's thesis)
 - setup.ipynb: information about the virtual environment settings 
 - link_tree.md/ipynb: Relevant links and information about the pipelines and helpful links for the project
