@@ -1,11 +1,10 @@
-
 #!/bin/bash
-#SBATCH -c 6                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
+#SBATCH -c 18                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
 #SBATCH --job-name=dARGS
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
-#SBATCH --mem=100G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=dARGs_Jutta_strains.out
 #SBATCH --error=dARGs_Jutta_strains.err
 # here starts your actual program call/computation
@@ -17,17 +16,19 @@ conda activate DeepARG
 
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL
 MAG_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Files"
-ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/STRAINs_PRODIGAL"
-DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepARGs"
+ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL"
+ComplCDS_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/CDS_COMPLETE"
+ComplORF_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/ORF_COMPLETE"
+DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepARGs/DeepARG_PROKS"
 DBDIR="/gxfs_work/geomar/smomw681/DATABASES/DeepARG"
 
 echo "START TIME": '' $(date)
-for i in ${ProdDIR}/*.COMPLETE.ORFs.faa;
+for i in ${ComplORF_Dir}/*.COMPLETE.ORFs.faa;
 do
 base=$(basename $i ".COMPLETE.ORFs.faa")
 deeparg predict \
     --model LS \
-    -i ${ProdDIR}/${base}.COMPLETE.ORFs.faa \
+    -i ${ComplORF_Dir}/${base}.COMPLETE.ORFs.faa \
     -o ${DeepARGsDIR}/${base}.deeparg.out \
     -d ${DBDIR}/ \
     --type prot \

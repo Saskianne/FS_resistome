@@ -19,13 +19,12 @@ cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/AntiSMASH_PROKS
 echo "START TIME": '' $(date)
 
 # Set up variables
-GENOME_Jutta="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/GENOME_Jutta"
+dREP_PROKS_BIN="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN/dereplicated_genomes"
 DBDIR="/gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/lib/python3.10/site-packages/antismash/databases"
 ANTISMASH_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/AntiSMASH_PROKS"
-FILES=($GENOME_Jutta/*.fasta)
 
-for file in ${GENOME_Jutta}/*.fasta; do
-base=$(basename $file ".fasta")
+for file in ${dREP_PROKS_BIN}/*.fa; do
+base=$(basename $file ".fa")
 sbatch --cpus-per-task=4 --mem=100G --wrap="antismash \
      -t bacteria \
      --cpus 8 \

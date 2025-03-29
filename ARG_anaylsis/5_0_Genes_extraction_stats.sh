@@ -16,29 +16,31 @@ source $HOME/my_python_env/my_env/bin/activate
 module load python/3.11.5
 
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL
-MAG_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Filess"
+MAG_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Files"
 ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL"
+ComplCDS_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/CDS_COMPLETE"
+ComplORF_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/ORF_COMPLETE"
 ### add path to CDS and ORF files and change the prodigal file path
 
 echo "START TIME": '' $(date)
 
-for i in ${ProdDIR}/*.CDS.fna
+for i in ${ProdDIR}/CDS_ORIGINAL/*.CDS.fna
 do
 echo working with $i
 base=$(basename $i ".CDS.fna")
 python ${MAG_Files}/SL_Extract_complete_or_partial_genes_fromProdigalPredictions.py \
-     -i ${ProdDIR}/${base}.CDS.fna \
-     -o ${ProdDIR}/${base}.COMPLETE.CDS.fna \
+     -i ${ProdDIR}/CDS_ORIGINAL/${base}.CDS.fna \
+     -o ${ComplCDS_Dir}/${base}.COMPLETE.CDS.fna \
      -r partial=00
 done
 
-for i in ${ProdDIR}/*.ORFs.faa
+for i in ${ProdDIR}/ORFs_ORIGINAL/*.ORFs.faa
 do
 echo working with $i
 base=$(basename $i ".ORFs.faa")
 python ${MAG_Files}/SL_Extract_complete_or_partial_genes_fromProdigalPredictions.py \
-     -i ${ProdDIR}/${base}.ORFs.faa \
-     -o ${ProdDIR}/${base}.COMPLETE.ORFs.faa \
+     -i ${ProdDIR}/ORFs_ORIGINAL/${base}.ORFs.faa \
+     -o ${ComplORF_Dir}/${base}.COMPLETE.ORFs.faa \
      -r partial=00
 done
 
