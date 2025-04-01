@@ -55,6 +55,8 @@ do
      fi
 done
 
+
+echo start renaming scaffolds
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed/SCAFFOLDS
 for i in /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/MIN500bp_CONTIGs/*scaffolds_min500.fasta
 do
