@@ -39,7 +39,10 @@ Bioinformatic tools:
         - https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md
     - Canu (v2.3)
         - https://github.com/marbl/canu
-
+    - Falcon 
+        - https://github.com/PacificBiosciences/pb-assembly?tab=readme-ov-file#usage
+        - https://pb-falcon.readthedocs.io/en/latest/commands.html
+        
     - bandage (v0.8.1)
         - https://github.com/rrwick/Bandage/wiki
     - (meta)Quast (v5.3.0)
@@ -91,6 +94,7 @@ Bioinformatic tools:
 
 General understanding:
 - Metagenome assembly with metaSPAdes: https://carpentries-lab.github.io/metagenomics-analysis/04-assembly/index.html
+- MAG assembly with long-reads: https://gtpb.github.io/AM22/pages/06-assembly/6.assembly.html
 - conda: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
 - general bash & shell: https://www.gnu.org/software/bash/manual/bash.html#Installing-Bash
 - Bacterial genome assembly guide of Ryan Wick guy: https://rrwick.github.io/2020/10/30/guide-to-bacterial-genome-assembly.html
