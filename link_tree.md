@@ -28,6 +28,7 @@ Bioinformatic tools:
     
     - Trimmomatric (bioconda::trimmomatic, v0.39)
     - bbmap (bioconda::bbmap, v39.15)
+        - https://github.com/BioInfoTools/BBMap
 
     - wtdbg2(v2.5)
         - https://github.com/ruanjue/wtdbg2
