@@ -44,6 +44,30 @@ python ${MAG_Files}/SL_Extract_complete_or_partial_genes_fromProdigalPredictions
      -r partial=00
 done
 
+cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/
+## STATS.xls files for
+
+## CTG_Illumina
+sbatch -c 3 -p base --mem=50G --job-name=StatCTG_Illumina \
+     --wrap="perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Fasta_Files_stats_modified_jobname.pl \
+     CONTIGs_renamed"
+##
+## CTG_PROKS
+sbatch -c 3 -p base --mem=50G --job-name=StatCTG_PROKS \
+     --wrap="perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Fasta_Files_stats_modified_jobname.pl \
+     CLASS_CONTIGs/PROKS"
+##
+## ORFs
+sbatch -c 3 -p base --mem=50G --job-name=StatORF_PROKS \
+     --wrap="perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Fasta_Files_stats_modified_jobname.pl \
+     PRODIGAL/ORFs_ORIGINAL"
+##
+## CDS
+sbatch -c 3 -p base --mem=50G --job-name=StatCDS_PROKS \
+     --wrap="perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Fasta_Files_stats_modified_jobname.pl \
+     PRODIGAL/CDS_ORIGINAL"
+##
+
 echo "END TIME": '' $(date)
 ##
 

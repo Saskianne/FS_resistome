@@ -19,12 +19,12 @@ source $HOME/my_python_env/my_env/bin/activate
 module load python/3.11.5
 
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/DEEPMicroClass
-CONTIG_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed"
+dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
 OUTPUTDir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/PROKS"
 TSVDir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/DEEPMicroClass"
 
 echo "START TIME": '' $(date)
-for i in ${CONTIG_Dir}/*_contigs_min500_renamed.fasta;
+for i in ${dREP_FILEs}/*.fa;
 do
 file=$(basename $i "renamed.fasta");
 if [ ! -f ${OUTPUTDir}/${file}_Proks.fna ]; then

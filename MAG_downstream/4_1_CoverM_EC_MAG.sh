@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
 #SBATCH --mem=100G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=CoverM_EC_MAG.out
-#SBATCH --error=CoverM_EC_MAG.err
+#SBATCH --output=CoverM_MAG_ALL.out
+#SBATCH --error=CoverM_MAG_ALL.err
 #SBATCH --mail-user=slee@geomar.de
 #SBATCH --mail-type=ALL
 #
@@ -53,6 +53,7 @@ export Canu_EC_Trim_FILEs="/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly/Canu/
 for sample in ${Canu_EC_Trim_FILEs[@]};
 do
 base=$(basename $sample "_trimmedReads.fasta.gz")
+dir=$(dirname $sample)
 coverm genome \
      -t 8 \
      --mapper minimap2-sr \
@@ -60,10 +61,10 @@ coverm genome \
      --min-read-aligned-percent 0.80 \
      --min-covered-fraction 10 \
      --methods rpkm \
-     --interleaved ${EC_READs}/${base}.qc.ec.PE.fq.gz \
+     --interleaved $sample \
      --genome-fasta-extension fa \
      --genome-fasta-directory ${dREP_FILEs}/ \
-     --output-file ${CoverM_DIR}/${base}.coverm_proks_dRepMAGs.tsv
+     --output-file ${CoverM_DIR}/${base}.coverm_PacBio_dRepMAGs.tsv
 done
 
 echo "END TIME": '' $(date)

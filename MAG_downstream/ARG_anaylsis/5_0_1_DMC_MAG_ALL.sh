@@ -12,19 +12,20 @@
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate MAG
-cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/DEEPMicroClass
+cd /gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepMicroClass_ALL
 
 echo "START TIME": '' $(date)
 
-for i in /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed/*_contigs_min500_renamed.fasta;
+dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
+DMC_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepMicroClass_ALL"
+
+for i in /gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes/*.fa;
 do
-echo working with $i
-CONTIGsDir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed"; 
-base=$(basename $i "_min500bp.fasta");
-OUTPUTDir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/DEEPMicroClass"
+echo working with $i; 
+base=$(basename $i ".fa");
 DeepMicroClass predict \
      --input $i \
-     --output_dir ${OUTPUTDir}/ \
+     --output_dir ${DMC_DIR}/ \
      --encoding onehot \
      --mode hybrid \
      --device cpu; 
