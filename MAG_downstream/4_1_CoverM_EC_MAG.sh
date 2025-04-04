@@ -26,15 +26,34 @@ module load miniconda3/24.11.1
 conda activate METABAT2
 
 # Set up variables
-dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN/dereplicated_genomes"
-EC_READs="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
-CoverM_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CoverM_PROKs"
+export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
+export EC_READs="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
+export CoverM_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/CoverM_ALL"
 
 for sample in `ls ${EC_READs}/*.qc.ec.PE.fq.gz`;
 do
 base=$(basename $sample ".qc.ec.PE.fq.gz")
 coverm genome \
-     -t 32 \
+     -t 18 \
+     --mapper minimap2-sr \
+     --min-read-percent-identity 0.95 \
+     --min-read-aligned-percent 0.80 \
+     --min-covered-fraction 10 \
+     --methods rpkm \
+     --interleaved ${EC_READs}/${base}.qc.ec.PE.fq.gz \
+     --genome-fasta-extension fa \
+     --genome-fasta-directory ${dREP_FILEs}/ \
+     --output-file ${CoverM_DIR}/${base}.coverm_proks_dRepMAGs.tsv
+done
+
+export CoverM_PacBio_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/CoverM_ALL/CoverM_PacBio"
+export PacBio_RAW="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
+
+for sample in `ls ${EC_READs}/*.qc.ec.PE.fq.gz`;
+do
+base=$(basename $sample ".qc.ec.PE.fq.gz")
+coverm genome \
+     -t 8 \
      --mapper minimap2-sr \
      --min-read-percent-identity 0.95 \
      --min-read-aligned-percent 0.80 \

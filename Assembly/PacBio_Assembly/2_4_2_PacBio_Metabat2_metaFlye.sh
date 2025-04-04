@@ -14,15 +14,12 @@
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 
-PacBio_Assembly="/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly"
 MAG_PacBio="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio"
-wtdbg_noEC_CONTIG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/CONTIGs_wtdbg2_raw"
+metaFLYE_CONTIG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/CONTIGs_metaFlye"
 PacBio_RAW="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
-
-BAM_FILEs="${MAG_PacBio}/BAMFILEs_PacBio"
-COV_FILEs="${MAG_PacBio}/COVERAGE_PacBio"
-METABAT2_FILEs="${MAG_PacBio}/METABAT2_PacBio"
-EC_READs="/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly/Canu/SRR*"
+BAM_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/BAMFILEs_PacBio/BAM_metaFlye"
+COV_FILEs="${MAG_PacBio}/COVERAGE_PacBio/COV_metaFlye"
+METABAT2_FILEs="${MAG_PacBio}/METABAT2_PacBio/BIN_metaFlye"
 
 echo "START TIME": '' $(date)
 
@@ -30,21 +27,21 @@ conda activate Assembly
 cd /gxfs_work/geomar/smomw681/DATA/MAG_PacBio/BAMFILEs_PacBio
 
 echo starting bbmap at $(date)
-for dir in ${EC_READs[@]};
+for sample in ${PacBio_RAW}/*_1.fastq.gz;
 do
-    base=$(basename $dir "_1.fastq.gz");
+    base=$(basename $sample "_1.fastq.gz");
     if [ ! -f ${BAM_FILEs}/${base}.out.bam ]; then
         echo working on $base 
         bbmap.sh \
-            ref=${wtdbg_noEC_CONTIG_FILEs}/${base}.ctg.fastq \
-            in=${dir}/${base}.correctedReads.fasta.gz \
+            ref=${metaFLYE_CONTIG_FILEs}/${base}_assembly.fasta \
+            in=$sample \
             out=${BAM_FILEs}/${base}.out.bam \
             threads=8 pairedonly=t pigz=t \
             printunmappedcount=t timetag=t unpigz=t rebuild=f overwrite=f ordered=t bamscript=bs.sh; \
             sh bs.sh; 
         echo .bam file for $base is now has been created
     else
-        echo "BAM file for $dir already exist"
+        echo "BAM file for $sample already exist"
     fi
 done
 
@@ -58,7 +55,7 @@ if [ ! -f ${BAM_FILEs}/${base}.out.sorted.bam ]; then
         -o ${BAM_FILEs}/${base}.out.sorted.bam \
         --output-fmt BAM \
         --threads 16 \
-        --reference ${wtdbg_noEC_CONTIG_FILEs}/${base}.ctg.fastq \
+        --reference ${metaFLYE_CONTIG_FILEs}/${base}_assembly.fasta \
         $sample; 
     echo .sorted.bam file for $base is now has been created
 else
@@ -72,12 +69,12 @@ conda activate METABAT2
 for sample in ${BAM_FILEs}/*.out.sorted.bam;
 do
 base=$(basename $sample ".out.sorted.bam")
-if [ ! -f ${COV_Files}/${base}.depth.txt ]; then
+if [ ! -f ${COV_FILEs}/${base}.depth.txt ]; then
     jgi_summarize_bam_contig_depths \
-        --outputDepth ${COV_Files}/${base}.depth.txt \
-        --pairedContigs ${COV_Files}/${base}.paired.txt \
-        ${BAM_FILEs}/${base}.out.sorted.bam \
-        --referenceFasta ${wtdbg_noEC_CONTIG_FILEs}/${base}.ctg.fastq; 
+        --outputDepth ${COV_FILEs}/${base}.depth.txt \
+        --pairedContigs ${COV_FILEs}/${base}.paired.txt \
+        --referenceFasta ${metaFLYE_CONTIG_FILEs}/${base}_assembly.fasta \
+        ${BAM_FILEs}/${base}.out.sorted.bam; 
     echo .depth.txt file for $base is now has been created
 elif [ -f ${COV_Files}/${base}.depth.txt ]; then
     echo "depth.txt file for $sample already exist"
@@ -88,23 +85,22 @@ done
 echo  "Usually, paired.txt files are not generated, so don't worry about that"
 echo Done with generation of coverage files at $(date)
 
-echo start binning with METBAT2 at $(date)
-cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2
-for sample in ${wtdbg_noEC_FILES}/*.ctg.fastq;
-do
-base=$(basename $sample ".ctg.fastq");
-if [ ! -f ${METABAT2_FILEs}/${base}.metabat2.proksbin.* ]; then
-metabat2 -t 6 -m 1500 \
-     -a ${COV_FILEs}/${base}.depth.txt \
-     -o ${METABAT2_FILEs}/${base}.metabat2.proksbin.fasta \
-     -i $sample ; 
-elif [ -f ${METABAT2_FILEs}/${base}.metabat2.proksbin.* ]; then 
-     echo "File exists: ${base}.metabat2.proksbin";
-else
-     echo Something went wrong. 
-fi     
-done
-echo "METABAT2 binning completed at $(date)"
+# echo start binning with METBAT2 at $(date)
+# cd ${MAG_PacBio}/METABAT2_PacBio/
+# for sample in ${metaFLYE_CONTIG_FILEs}/${base}_assembly.fasta;
+# do
+# base=$(basename $sample ".ctg.fastq");
+# if [ ! -f ${METABAT2_FILEs}/${base}.metabat2.pbbin.* ]; then
+# metabat2 -t 6 -m 1500 \
+#     -o ${METABAT2_FILEs}/${base}.metabat2.pbbin.fasta \
+#     -d -v -i $sample ; # -a ${COV_FILEs}/${base}.depth.txt: coverage information left out due to low coverage of PacBio Seq
+# elif [ -f ${METABAT2_FILEs}/${base}.metabat2.pbbin.* ]; then 
+#      echo "File exists: ${base}.metabat2.pbbin";
+# else
+#      echo Something went wrong. 
+# fi     
+# done
+# echo "METABAT2 binning completed at $(date)"
 
-echo "END TIME": '' $(date)
-##
+# echo "END TIME": '' $(date)
+# ##

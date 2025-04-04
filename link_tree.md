@@ -38,6 +38,8 @@ Bioinformatic tools:
         - https://github.com/rrwick/Trycycler/wiki
     - (meta)Flye (v2.9.5)
         - https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md
+        - Consider using strainy for phasing and assembly
+            - https://github.com/katerinakazantseva/strainy
     - Canu (v2.3)
         - https://github.com/marbl/canu
     - Falcon 

@@ -39,7 +39,7 @@ echo start with metaQUAST
 python /gxfs_work/geomar/smomw681/.conda/envs/PacBio_Assembly/bin/metaquast \
 -o ${metaQUAST_DIR}/metaQUAST_reRun -t 4 --conserved-genes-finding ${metaFLYE_FILES[@]} ${wtdbg_FILES[@]} ${wtdbg_noEC_FILES[@]} ${Canu_utg_FILES[@]} ${Canu_ctg_FILES[@]} 
 echo metaQUAST done
-# rerun with --conserved-genes-finding flag
+# rerun with --conserved-genes-finding # BUSCO DB not found and download failed
 # TO DO: download BUSCO DB and rerun
 
 echo "END TIME": '' $(date)
