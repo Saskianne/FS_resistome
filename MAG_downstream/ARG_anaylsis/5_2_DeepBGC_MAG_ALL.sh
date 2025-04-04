@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
 #SBATCH --mem=220G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=DeepBGC_PROKS.out
-#SBATCH --error=DeepBGC_PROKS.err
+#SBATCH --output=DeepBGC_MAG_ALL.out
+#SBATCH --error=DeepBGC_MAG_ALL.err
 # here starts your actual program call/computation
 #
 
@@ -15,18 +15,17 @@ module load miniconda3/24.11.1
 conda activate DeepBGC
 
 
-cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL
-dREP_PROKS_BIN="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN/dereplicated_genomes"
-ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL"
-DeepBGCsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepBGCs/DeepBGC_PROKS"
+cd /gxfs_work/geomar/smomw681/DATA/MAG_ALL
+dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
+DeepBGCsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepBGC_ALL"
 
 echo "START TIME": '' $(date)
 
 # Set up variables
-FILES=(${dREP_PROKS_BIN}/*.fa)
+FILES=(${dREP_FILEs}/*.fa)
 
 # Iterate through files in batches of 4
-for file in ${dREP_PROKS_BIN}/*.fa ; do
+for file in ${dREP_FILEs}/*.fa ; do
 base=$(basename $file ".fa")
 deepbgc pipeline \
      --score 0.5  --prodigal-meta-mode \

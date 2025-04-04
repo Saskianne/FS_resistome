@@ -28,7 +28,7 @@ conda activate METABAT2
 # Set up variables
 export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
 export EC_READs="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
-export CoverM_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/CoverM_ALL"
+export CoverM_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/CoverM_ALL"
 
 for sample in `ls ${EC_READs}/*.qc.ec.PE.fq.gz`;
 do

@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
 #SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=AntiSMASH_PROKS.out
-#SBATCH --error=AntiSMASH_PROKS.err
+#SBATCH --output=AntiSMASH_MAG_ALL.out
+#SBATCH --error=AntiSMASH_MAG_ALL.err
 #
 # here starts your actual program call/computation
 #
@@ -14,16 +14,16 @@ module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate AntiSMASH
 
-cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/AntiSMASH
+cd /gxfs_work/geomar/smomw681/DATA/MAG_ALL/
 
 echo "START TIME": '' $(date)
 
 # Set up variables
-dREP_PROKS_BIN="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN/dereplicated_genomes"
+dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
 DBDIR="/gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/lib/python3.10/site-packages/antismash/databases"
-ANTISMASH_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/AntiSMASH/AntiSMASH_PROKS"
+ANTISMASH_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL"
 
-for file in ${dREP_PROKS_BIN}/*.fa; do
+for file in ${dREP_FILEs}/*.fa; do
 base=$(basename $file ".fa")
 sbatch --cpus-per-task=4 --mem=100G --wrap="antismash \
      -t bacteria \

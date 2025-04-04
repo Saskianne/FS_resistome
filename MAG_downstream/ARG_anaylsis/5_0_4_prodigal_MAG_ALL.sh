@@ -15,19 +15,20 @@ module load miniconda3/24.11.1
 conda activate MAG
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL
 
-ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL"
+dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
+ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/Prodigal_ALL"
 
 echo "START TIME": '' $(date)
-for i in /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/PROKS/*_contigs_min500_Proks.fna;
+for i in ${dREP_FILEs}/*.fa;
 do
-newfile="$(basename $i _contigs_min500_Proks.fna)"
+newfile="$(basename $i .fa)"
 if [ ! -f ${ProdDIR}/CDS_ORIGINAL/${newfile}.PROKS.CDS.fna ]; then
     echo working with $i
     pprodigal --tasks 16 --chunksize 20000 -p meta -m \
         -i $i \
         -o ${ProdDIR}/GBB_Temp.gbk \
         -d ${ProdDIR}/CDS_ORIGINAL/${newfile}.PROKS.CDS.fna \
-        -a ${ProdDIR}/ORFs_ORIGINAL/${newfile}.PROKS.ORFs.faa
+        -a ${ProdDIR}/ORF_ORIGINAL/${newfile}.PROKS.ORFs.faa
 else 
     echo "File ${ProdDIR}/CDS_ORIGINAL/${newfile}.PROKS.CDS.fna already exists"
 fi

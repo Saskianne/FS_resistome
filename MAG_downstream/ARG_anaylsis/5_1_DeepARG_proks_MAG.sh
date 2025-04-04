@@ -15,11 +15,11 @@ module load miniconda3/24.11.1
 conda activate DeepARG
 
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL
-MAG_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Files"
-ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL"
-ComplCDS_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/CDS_COMPLETE"
-ComplORF_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/ORF_COMPLETE"
-DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepARGs/DeepARG_PROKS"
+dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
+ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/Prodigal_ALL"
+ComplCDS_Dir="${ProdDIR}/CDS_COMPLETE"
+ComplORF_Dir="${ProdDIR}/ORF_COMPLETE"
+DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL"
 DBDIR="/gxfs_work/geomar/smomw681/DATABASES/DeepARG"
 
 echo "START TIME": '' $(date)
@@ -49,7 +49,7 @@ echo "END TIME": '' $(date)
 # wc -l DeepARGs/*.deeparg.out.mapping.ARG | awk '$1 > 1 {print $1-1,$2}' > DeepARGs_hits_perSample.txt
 
 ## Summary using perl script :
-# INPUT_FILE="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepARG/DeepARGs_hits_perSample.txt"  
-# OUTPUT_FILE="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepARG/deeparg_PROKS_summary.txt"
+# INPUT_FILE="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL/DeepARGs_hits_perSample.txt"  
+# OUTPUT_FILE="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL/deeparg_ALL_summary.txt"
 # perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_summarize_deeparg.pl "$INPUT_FILE" "$OUTPUT_FILE"
 ##
