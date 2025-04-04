@@ -48,10 +48,11 @@ done
 
 export CoverM_PacBio_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/CoverM_ALL/CoverM_PacBio"
 export PacBio_RAW="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
+export Canu_EC_Trim_FILEs="/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly/Canu/*/*_trimmedReads.fasta.gz"
 
-for sample in `ls ${EC_READs}/*.qc.ec.PE.fq.gz`;
+for sample in ${Canu_EC_Trim_FILEs[@]};
 do
-base=$(basename $sample ".qc.ec.PE.fq.gz")
+base=$(basename $sample "_trimmedReads.fasta.gz")
 coverm genome \
      -t 8 \
      --mapper minimap2-sr \
