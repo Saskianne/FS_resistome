@@ -48,4 +48,8 @@ echo "END TIME": '' $(date)
 # ## showing for each file, excluding the header
 # wc -l DeepARGs/*.deeparg.out.mapping.ARG | awk '$1 > 1 {print $1-1,$2}' > DeepARGs_hits_perSample.txt
 
+## Summary using perl script :
+# INPUT_FILE="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepARG/DeepARGs_hits_perSample.txt"  
+# OUTPUT_FILE="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/DeepARG/deeparg_PROKS_summary.txt"
+# perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_summarize_deeparg.pl "$INPUT_FILE" "$OUTPUT_FILE"
 ##

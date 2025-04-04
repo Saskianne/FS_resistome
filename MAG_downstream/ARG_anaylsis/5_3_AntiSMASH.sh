@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH -c 8                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
+#SBATCH -c 18                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
 #SBATCH --job-name=AntSMASH
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
 #SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=AntiSMASH_Jutta_strains.out
-#SBATCH --error=AntiSMASH_Jutta_strains.err
+#SBATCH --output=AntiSMASH_PROKS.out
+#SBATCH --error=AntiSMASH_PROKS.err
 #
 # here starts your actual program call/computation
 #
@@ -14,14 +14,14 @@ module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate AntiSMASH
 
-cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/AntiSMASH_PROKS
+cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/AntiSMASH
 
 echo "START TIME": '' $(date)
 
 # Set up variables
 dREP_PROKS_BIN="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN/dereplicated_genomes"
 DBDIR="/gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/lib/python3.10/site-packages/antismash/databases"
-ANTISMASH_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/AntiSMASH_PROKS"
+ANTISMASH_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/AntiSMASH/AntiSMASH_PROKS"
 
 for file in ${dREP_PROKS_BIN}/*.fa; do
 base=$(basename $file ".fa")
@@ -30,11 +30,18 @@ sbatch --cpus-per-task=4 --mem=100G --wrap="antismash \
      --cpus 8 \
      --databases ${DBDIR}/ \
      --output-dir ${ANTISMASH_DIR}/${base}/ \
+     --html-title ${base}_antiSMASH \
      --output-basename ${base} \
-     --genefinding-tool prodigal \
+     --genefinding-tool prodigal-m \
      $file"
 done
 
 
 echo "END TIME": '' $(date)
 #
+## Summary antiSMAH results
+## 
+# python /gxfs_work/geomar/smomw647/ComGenomicsTools/multismash/workflow/scripts/count_regions.py \
+#      /gxfs_work/geomar/smomw647/PROJECTS/SPONGEMicrobiome/COLLABORATIONs/SUNWOO/CLASS_CONTIGs/AntiSMASH_PROKS/ \
+#      AntiSMASH_PROKS_FWT_SpongeMGs_ProksContigsONLY.tsv
+##

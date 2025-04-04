@@ -24,21 +24,23 @@ echo "START TIME": '' $(date)
 PacBio_RAW="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
 RAW_FILES=(${PacBio_RAW}/SRR*.fastq.gz)
 PacBio_Assembly="/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly"
-Canu_FILES=(${PacBio_Assembly}/Canu/SRR*/*.contigs.fasta)
-metaFLYE_FILES=(${PacBio_Assembly}/metaFlye/*/*assembly.fasta)
+Canu_Dir="${PacBio_Assembly}/Canu"
+Canu_utg_FILES=(${PacBio_Assembly}/Canu/SRR*/*.unitigs.fasta)
+Canu_ctg_FILES=(${PacBio_Assembly}/Canu/SRR*/*.contigs.fasta)
+Canu_FILES=("${Canu_utg_FILES[@]}" "${Canu_unassem_FILES[@]}")
+metaFLYE_FILES=(${PacBio_Assembly}/metaFlye/SRR*/*_assembly.fasta)
 wtdbg_FILES=(${PacBio_Assembly}/wtdbg/reRun/*.ctg.fastq)
-metaQUAST_DIR="${PacBio_Assembly}/metaQUAST"
+metaQUAST_DIR="/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly/metaQUAST"
+wtdbg_noEC_FILES=(${PacBio_Assembly}/wtdbg/*.ctg.fastq)
 # Tycycler_FILES=(${PacBio_Assembly}/Trycycler/*/*.fasta)
-
-## general usage of metaQUAST
-# python metaquast.py contigs_1 contigs_2 ... \
-# -r reference_1,reference_2,reference_3,...
 
 echo start with metaQUAST
 # mkdir PacBio_Assembly/metaQUAST
 python /gxfs_work/geomar/smomw681/.conda/envs/PacBio_Assembly/bin/metaquast \
--o $metaQUAST_DIR -t 4 --pacbio ${RAW_FILES[@]} ${Canu_FILES[@]} ${metaFLYE_FILES[@]} ${wtdbg_FILES[@]} 
+-o ${metaQUAST_DIR}/metaQUAST_reRun -t 4 --conserved-genes-finding ${metaFLYE_FILES[@]} ${wtdbg_FILES[@]} ${wtdbg_noEC_FILES[@]} ${Canu_utg_FILES[@]} ${Canu_ctg_FILES[@]} 
+echo metaQUAST done
+# rerun with --conserved-genes-finding flag
+# TO DO: download BUSCO DB and rerun
 
-
-
- echo "END TIME": '' $(date)
+echo "END TIME": '' $(date)
+##

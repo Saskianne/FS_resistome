@@ -52,7 +52,7 @@ cd /gxfs_work/geomar/smomw681/DATA/
 export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/dREP_PROKS_BIN/dereplicated_genomes"
 export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/GTDBTK_PROKS"
 export MASH_DB="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/MASH_DB"
-
+export LD_LIBRARY_PATH="/gxfs_work/geomar/smomw681/.conda/envs/GTDBTK/lib/libgsl.so.27"
 
 sbatch -p base -c 16 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK1 \
      --output=GTDBTK.out --error=GTDBTK.err \

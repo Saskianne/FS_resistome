@@ -223,7 +223,7 @@ done
 echo "END TIME": '' 'date'
 #
 
-## Summary antiSMAH results
+## Summary antiSMASH results
 ## 
 python /gxfs_work/geomar/smomw647/ComGenomicsTools/multismash/workflow/scripts/count_regions.py \
      /gxfs_work/geomar/smomw647/PROJECTS/SPONGEMicrobiome/COLLABORATIONs/SUNWOO/CLASS_CONTIGs/AntiSMASH_PROKS/ \

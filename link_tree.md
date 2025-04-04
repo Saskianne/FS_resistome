@@ -46,6 +46,7 @@ Bioinformatic tools:
         
     - bandage (v0.8.1)
         - https://github.com/rrwick/Bandage/wiki
+        - https://github.com/rrwick/Bandage/wiki/Command-line
     - (meta)Quast (v5.3.0)
         - https://quast.sourceforge.net/docs/manual.html#sec2.4
         - https://github.com/ziyewang/MetaAssemblyEval
@@ -68,6 +69,9 @@ Bioinformatic tools:
     - MetaBat2
         - adaptive binning algorithm for microbial genome reconstruction from metagenome assemblies 
         - https://bitbucket.org/berkeleylab/metabat/src/master/
+        - https://bitbucket.org/berkeleylab/metabat/src/master/README.md
+    - HiFi-MAG-Pipeline 
+        - https://www.pacb.com/wp-content/uploads/2023_APHL-poster.pdf
     - CheckM2 (v1.1.0)
         - check the quality of MAGs, 
         - Criteria min completeness 50% and contamination under 5%
@@ -87,16 +91,21 @@ Bioinformatic tools:
         - conda-forge/label/python_rc::_python_rc
         - conda-forge::libsass=0.22.0
         - python=3.10
+        - https://docs.antismash.secondarymetabolites.org/understanding_output/overview/
+        - https://docs.antismash.secondarymetabolites.org/modules/clusterblast/
     - DeepARG (bioconda::deeparg, v1.0.4)
     - DeepBGC (v0.1.31)
         - https://github.com/Merck/deepbgc
+        - 
     
 
 
 General understanding:
 - Metagenome assembly with metaSPAdes: https://carpentries-lab.github.io/metagenomics-analysis/04-assembly/index.html
-- MAG assembly with long-reads: https://gtpb.github.io/AM22/pages/06-assembly/6.assembly.html
-- conda: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
+- MAG assembly with long-reads: 
+    - https://gtpb.github.io/AM22/pages/06-assembly/6.assembly.html
+    - https://github.com/Shao-Group/metagenome-analysis#22--assembly
+- Conda: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
 - general bash & shell: https://www.gnu.org/software/bash/manual/bash.html#Installing-Bash
 - Bacterial genome assembly guide of Ryan Wick guy: https://rrwick.github.io/2020/10/30/guide-to-bacterial-genome-assembly.html
     - I really love his documentation style

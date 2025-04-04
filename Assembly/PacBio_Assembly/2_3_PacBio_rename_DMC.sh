@@ -9,8 +9,42 @@
 #SBATCH --error=Assem_all_3.err
 # here starts your actual program call/computation
 
+module load gcc/12.3.0
+source ~/perl5/perlbrew/etc/bashrc
+perlbrew switch perl-5.38.0
+
+
+cd /gxfs_work/geomar/smomw681/DATA/MAG_PacBio
+
+echo "START TIME": '' $(date)
+
+# set up variables 
+PacBio_RAW="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
+RAW_FILES=(${PacBio_RAW}/SRR*.fastq.gz)
+PacBio_Assembly="/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly"
+Canu_FILES=(${PacBio_Assembly}/Canu/SRR*/*.contigs.fasta)
+metaFLYE_FILES=(${PacBio_Assembly}/metaFlye/*/*assembly.fasta)
+wtdbg_FILES=(${PacBio_Assembly}/wtdbg/reRun/*.ctg.fastq)
+
+# rename the assembled MAGs 
+for i in ${Canu_FILES[@]} ${metaFLYE_FILES[@]} ${wtdbg_FILES[@]};
+do
+     file=$(basename $i)
+     if [ ! -f ${CONTIGs_renamed}/${file} ]; then
+          echo working with $i
+          newfile="$(basename $i _contigs_min500.fasta)"
+          perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_rename_fasta_id.pl \
+          -i $i \
+          -p "tig" \
+          -r ${newfile}_ \
+          -n -a ctg > "${newfile}_contigs_min500_renamed.fasta"
+     else 
+          echo "File ${file} already exists in ${CONTIGs_renamed}"
+     fi
+done
+
 ## STEP 6
-### EXTRACT CONTIGs FOR THE DIFFERENT CLASSES#
+### EXTRACT CONTIGs FOR THE DIFFERENT CLASSES
 #
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
