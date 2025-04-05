@@ -26,7 +26,7 @@ if [ ! -f ${ProdDIR}/CDS_ORIGINAL/${newfile}.PROKS.CDS.fna ]; then
     echo working with $i
     pprodigal --tasks 16 --chunksize 20000 -p meta -m \
         -i $i \
-        -o ${ProdDIR}/GBB_Temp.gbk \
+        -o ${ProdDIR}/GBK/${newfile}_GBB.gbk \
         -d ${ProdDIR}/CDS_ORIGINAL/${newfile}.PROKS.CDS.fna \
         -a ${ProdDIR}/ORF_ORIGINAL/${newfile}.PROKS.ORFs.faa
 else 

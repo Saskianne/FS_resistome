@@ -5,6 +5,8 @@ University:
 
 References/Literature:
 - Porifera data base: https://www.marinespecies.org/porifera/
+- Antibiotic resistance database 
+    - CARD: https://card.mcmaster.ca/home
 
 
 Bioinformatic tools:

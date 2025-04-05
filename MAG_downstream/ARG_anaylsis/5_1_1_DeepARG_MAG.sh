@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
 #SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=dARGs_Jutta_strains.out
-#SBATCH --error=dARGs_Jutta_strains.err
+#SBATCH --output=dARGs_MAG_ORF.out
+#SBATCH --error=dARGs_MAG_ORF.err
 # here starts your actual program call/computation
 #
 
@@ -14,7 +14,7 @@ module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate DeepARG
 
-cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL
+cd /gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL/
 dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
 ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/Prodigal_ALL"
 ComplCDS_Dir="${ProdDIR}/CDS_COMPLETE"
@@ -23,13 +23,13 @@ DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL"
 DBDIR="/gxfs_work/geomar/smomw681/DATABASES/DeepARG"
 
 echo "START TIME": '' $(date)
-for i in ${ComplORF_Dir}/*.COMPLETE.ORFs.faa;
+for i in ${ComplORF_Dir}/*.COMPLETE.ORFs.faa ;
 do
 base=$(basename $i ".COMPLETE.ORFs.faa")
 deeparg predict \
     --model LS \
     -i ${ComplORF_Dir}/${base}.COMPLETE.ORFs.faa \
-    -o ${DeepARGsDIR}/${base}.deeparg.out \
+    -o ${DeepARGsDIR}/${base}.deeparg.ORF.out \
     -d ${DBDIR}/ \
     --type prot \
     --min-prob 0.8 \
@@ -37,6 +37,23 @@ deeparg predict \
     --arg-alignment-evalue 1e-10 \
     --arg-num-alignments-per-entry 1000;
 done
+
+echo "START TIME": '' $(date)
+for i in ${ComplORF_Dir}/*.COMPLETE.ORFs.faa ;
+do
+base=$(basename $i ".COMPLETE.ORFs.faa")
+deeparg predict \
+    --model LS \
+    -i ${ComplORF_Dir}/${base}.COMPLETE.CDS.fna \
+    -o ${DeepARGsDIR}/DeepARG_CDS/${base}.deeparg.CDS.out \
+    -d ${DBDIR}/ \
+    --type prot \
+    --min-prob 0.8 \
+    --arg-alignment-identity 50 \
+    --arg-alignment-evalue 1e-10 \
+    --arg-num-alignments-per-entry 1000;
+done
+
 
 echo "END TIME": '' $(date)
 ##
