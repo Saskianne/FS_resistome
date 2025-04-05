@@ -38,7 +38,6 @@ deeparg predict \
     --arg-num-alignments-per-entry 1000;
 done
 
-echo "START TIME": '' $(date)
 for i in ${ComplORF_Dir}/*.COMPLETE.ORFs.faa ;
 do
 base=$(basename $i ".COMPLETE.ORFs.faa")

@@ -37,6 +37,7 @@ sbatch -p base -c 18 -t 10-00:00 --qos=long --mem=240G --job-name=dREP \
      -g ${METABAT2_FILEs}/*.fa "
 ##
 
+
 ########################################
 ## DETERMINE TAXONOMY OF dREPs
 ########################################

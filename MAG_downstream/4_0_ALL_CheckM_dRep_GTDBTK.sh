@@ -1,24 +1,17 @@
-######################
-## run checkm
+##########################
+## run checkm2 for MAG
 ##########################
 
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate METABAT2
 
-MAG_PacBio="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio"
-metaFLYE_CONTIG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/CONTIGs_metaFlye"
-PacBio_RAW="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
-BAM_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/BAMFILEs_PacBio/BAM_metaFlye"
-COV_FILEs="${MAG_PacBio}/COVERAGE_PacBio/COV_metaFlye"
-
-
 cd /gxfs_work/geomar/smomw681/DATA/MAG_PacBio
 MAG_PacBio="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio"
 METABAT2_FILEs="${MAG_PacBio}/METABAT2_PacBio/BIN_metaFlye"
 CheckM2_OUTPUTs="${MAG_PacBio}/CheckM2_PacBio/CheckM2_metaFlye"
 
-
+# conda env config vars set CHECKM2DB="/gxfs_work/geomar/smomw681/DATABASES/CheckM_db/CheckM2_database"
 #for MAG in ${METABAT2_FILEs}/*.metabat2.pbbin.fasta.*.fa; 
 #do
 #base=$(basename $MAG .metabat2.pbbin.fasta.*.fa)
@@ -41,6 +34,7 @@ sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
      --wrap="checkm2 predict \
      --threads 16 \
      --extension fa \
+     --force \
      --input ${ASG_MAG_FILEs}/ \
      --output-directory ${CheckM2_OUTPUTs_ASG}/ "
 
@@ -90,6 +84,37 @@ sbatch -p base -c 18 -t 10-00:00 --qos=long --mem=240G --job-name=dREP \
      -ms 1000 --S_algorithm fastANI \
      -g ${PacBio_METABAT2_FILEs}/*.fa ${Illumina_METABAT2_FILEs}/*.fa ${ASG_MAG_FILEs}/*.fa "
 ##
+
+########################################
+## Run CheckM2 for dereplicated MAG
+########################################
+
+module load gcc12-env/12.3.0
+module load miniconda3/24.11.1
+conda activate METABAT2
+
+cd /gxfs_work/geomar/smomw681/DATA/MAG_ALL
+CheckM2_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/CheckM2_ALL"
+dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
+
+#for MAG in ${METABAT2_FILEs}/*.metabat2.pbbin.fasta.*.fa; 
+#do
+#base=$(basename $MAG .metabat2.pbbin.fasta.*.fa)
+# if [ ! -f ${CheckM2_OUTPUTs}/${base}.****]
+sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
+     --job-name=checkM2 --output=CheckM2_drep.out --error=CheckM2_drep.err\
+     --wrap="checkm2 predict \
+     --threads 16 \
+     --extension fa \
+     --force \
+     --input ${dREP_FILEs}/ \
+     --output-directory ${CheckM2_OUTPUTs}/ "
+# done
+
+## make statistics of CheckM2 files
+CheckM2_STATs_PL="/gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Extract_bin_stats_from_bin_stats_tree_tsv_file_from_checkm.pl"
+perl ${CheckM2_STATs_PL}  
+
 
 ########################################
 ## DETERMINE TAXONOMY OF dREPs

@@ -6,17 +6,10 @@ module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 conda activate METABAT2
 
-MAG_PacBio="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio"
-metaFLYE_CONTIG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/CONTIGs_metaFlye"
-PacBio_RAW="/gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs"
-BAM_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/BAMFILEs_PacBio/BAM_metaFlye"
-COV_FILEs="${MAG_PacBio}/COVERAGE_PacBio/COV_metaFlye"
-
-
 cd /gxfs_work/geomar/smomw681/DATA/MAG_PacBio
-MAG_PacBio="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio"
-METABAT2_FILEs="${MAG_PacBio}/METABAT2_PacBio/BIN_metaFlye"
-CheckM2_OUTPUTs="${MAG_PacBio}/CheckM2_PacBio/CheckM2_metaFlye"
+export MAG_PacBio="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio"
+export METABAT2_FILEs="${MAG_PacBio}/METABAT2_PacBio/BIN_metaFlye"
+export CheckM2_OUTPUTs="${MAG_PacBio}/CheckM2_PacBio/CheckM2_metaFlye"
 
 
 #for MAG in ${METABAT2_FILEs}/*.metabat2.pbbin.fasta.*.fa; 
