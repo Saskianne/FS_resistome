@@ -34,7 +34,7 @@ BASES=(basename ${FILES[@]} "_1.fastq.gz")
 ## QC raw fastq files
 dir3="${dir1}/RAW_fastqc" # dir for QC result for raw fastq files
 
-fastqc --memory 10GB -f fastq -t 4 -noextract -o $dir3 ${FILES[@]}  
+fastqc --memory 10GB -f fastq -t 4 -noextract -o $dir3 ${FILES[@]} 
 multiqc -o ${dir3} -n RAW_fastqc_summary -i RAW_fastqc_summary -p  ${dir3}   
 
 ## QC trimmed fastq files

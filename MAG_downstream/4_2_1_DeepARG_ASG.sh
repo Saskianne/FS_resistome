@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
 #SBATCH --mem=150G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=dARG_PacBio.out
-#SBATCH --error=dARG_PacBio.err
+#SBATCH --output=dARG_ASG.out
+#SBATCH --error=dARG_ASG.err
 
 # here starts your actual program call/computation
 
@@ -15,14 +15,14 @@ module load miniconda3/24.11.1
 conda activate MAG
 cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL
 
-MAG_metaFlye="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/METABAT2_PacBio/BIN_metaFlye"
-ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/Prodigal_PacBio"
+MAG_ASG="/gxfs_work/geomar/smomw681/DATA/MAG_ASG"
+ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ASG/Prodigal_ASG"
 
 echo "START TIME": '' $(date)
 
 # Run prodigal 
 echo Start running prodigal at $(date)
-for i in ${MAG_metaFlye}/*.fa ;
+for i in ${MAG_ASG}/*.fa ;
 do
 newfile="$(basename $i .fa)"
 if [ ! -f ${ProdDIR}/CDS_ORIGINAL/${newfile}.PROKS.CDS.fna ]; then
@@ -50,7 +50,7 @@ module load python/3.11.5
 
 cd /gxfs_work/geomar/smomw681/DATA
 MAG_Files="/gxfs_work/geomar/smomw681/DATA/MAG_Files"
-ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/Prodigal_PacBio"
+ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ASG/Prodigal_ASG"
 
 for i in ${ProdDIR}/ORF_ORIGINAL/*.ORF.faa
 do
@@ -70,10 +70,10 @@ module load miniconda3/24.11.1
 conda activate DeepARG
 
 cd /gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL/
-ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/Prodigal_PacBio"
+ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ASG/Prodigal_ASG"
 ComplCDS_Dir="${ProdDIR}/CDS_COMPLETE"
 ComplORF_Dir="${ProdDIR}/ORF_COMPLETE"
-DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/DeepARG_PacBio"
+DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ASG/DeepARG_ASG"
 DBDIR="/gxfs_work/geomar/smomw681/DATABASES/DeepARG"
 
 echo "START TIME": '' $(date)
