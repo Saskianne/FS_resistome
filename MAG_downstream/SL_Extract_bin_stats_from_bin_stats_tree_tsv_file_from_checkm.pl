@@ -19,8 +19,8 @@ print $out join("\t", 'Bin', 'GC', 'Genome_size', 'No_contigs', 'Longest_contig'
 
 # Process each line of the input file
 while (my $line = <$in>) {
-    # Only process lines that contain .metabat2.bin
-    if ($line =~ /^(\S+\.metabat2\.bin\S+)\s+\{(.+)\}$/) {
+    # Only process lines that contain .metabat2.
+    if ($line =~ /^(\S+\.metabat2.\S+)\s+\{(.+)\}$/) {
         my $bin_name = $1;  # Capture the bin name
         my $stats = $2;     # Capture the stats part of the line
 

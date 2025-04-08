@@ -11,6 +11,7 @@ MAG_PacBio="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio"
 METABAT2_FILEs="${MAG_PacBio}/METABAT2_PacBio/BIN_metaFlye"
 CheckM2_OUTPUTs="${MAG_PacBio}/CheckM2_PacBio/CheckM2_metaFlye"
 
+
 # conda env config vars set CHECKM2DB="/gxfs_work/geomar/smomw681/DATABASES/CheckM_db/CheckM2_database"
 #for MAG in ${METABAT2_FILEs}/*.metabat2.pbbin.fasta.*.fa; 
 #do
@@ -129,9 +130,10 @@ module load gcc/12.3.0
 cd /gxfs_work/geomar/smomw681/DATA/
 
 export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
-export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/GTDBTK_ALL"
+export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/GTDBTK_ALL/GTDBTK_ALL_rerun"
 export MASH_DB="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/MASH_DB"
 export LD_LIBRARY_PATH="/gxfs_work/geomar/smomw681/.conda/envs/GTDBTK/lib/libgsl.so.27"
+export GTDBTK_DATA_PATH="/gxfs_work/geomar/smomw681/DATABASES/GTDBTK_db/db"
 
 ## Check whether the GTDBTK database is downloaded and configured
 # echo $GTDBTK_DATA_PATH
@@ -147,11 +149,32 @@ ls -l /gxfs_work/geomar/smomw681/.conda/envs/GTDBTK/lib/libgsl.so.25
 sbatch -p base -c 16 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK2 \
      --output=GTDBTK_ALL.out --error=GTDBTK_ALL.err \
      --wrap="gtdbtk classify_wf \
-     --cpus 16 -x fa \
+     --cpus 16 -x fa --full_tree \
      --genome_dir ${dREP_FILEs}/ \
      --mash_db ${MASH_DB}/ \
      --out_dir ${GTDBTK_OUTPUTs}/ "
 
+# GTDBTK for BIN_metaFlye
+export MAG_metaFlye="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/METABAT2_PacBio/BIN_metaFlye"
+export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/GTDBTK_ALL/GTDBTK_BIN/GTDBTK_metaFlye"
+export MASH_DB="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/MASH_DB"
+export LD_LIBRARY_PATH="/gxfs_work/geomar/smomw681/.conda/envs/GTDBTK/lib/libgsl.so.27"
+conda env config vars set GTDBTK_DATA_PATH="/gxfs_work/geomar/smomw681/DATABASES/GTDBTK_db/db"
+sbatch -p base -c 10 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK2 \
+     --output=GTDBTK_BIN_metaFlye.out --error=GTDBTK_BIN_metaFlye.err \
+     --wrap="gtdbtk classify_wf \
+     --cpus 16 -x fa --full_tree\
+     --genome_dir ${MAG_metaFlye}/ \
+     --mash_db ${MASH_DB}/ \
+     --out_dir ${GTDBTK_OUTPUTs}/ "
 
-
-
+# GTDBTK for ASG MAG
+export ASG_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ASG"
+export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/GTDBTK_ALL/GTDBTK_BIN/GTDBTK_ASG"
+sbatch -p base -c 6 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK2 \
+     --output=GTDBTK_MAG_ASG.out --error=GTDBTK_MAG_ASG.err \
+     --wrap="gtdbtk classify_wf \
+     --cpus 16 -x fa --full_tree \
+     --genome_dir ${MAG_ASG_FILEs}/ \
+     --mash_db ${MASH_DB}/ \
+     --out_dir ${GTDBTK_OUTPUTs}/ "

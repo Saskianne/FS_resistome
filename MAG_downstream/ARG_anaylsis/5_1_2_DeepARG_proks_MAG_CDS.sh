@@ -19,19 +19,19 @@ dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genome
 ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/Prodigal_ALL"
 ComplCDS_Dir="${ProdDIR}/CDS_COMPLETE"
 ComplORF_Dir="${ProdDIR}/ORF_COMPLETE"
-DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL/"
+DeepARGsDIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL"
 DBDIR="/gxfs_work/geomar/smomw681/DATABASES/DeepARG"
 
 echo "START TIME": '' $(date)
-for i in ${ComplORF_Dir}/*.COMPLETE.ORFs.faa ;
+for i in ${ComplORF_Dir}/*.COMPLETE.ORFs.fna ;
 do
-base=$(basename $i ".COMPLETE.ORFs.faa")
+base=$(basename $i ".COMPLETE.ORFs.fna")
 deeparg predict \
     --model LS \
     -i ${ComplORF_Dir}/${base}.COMPLETE.CDS.fna \
     -o ${DeepARGsDIR}/DeepARG_CDS/${base}.deeparg.CDS.out \
     -d ${DBDIR}/ \
-    --type prot \
+    --type nucl \
     --min-prob 0.8 \
     --arg-alignment-identity 50 \
     --arg-alignment-evalue 1e-10 \
