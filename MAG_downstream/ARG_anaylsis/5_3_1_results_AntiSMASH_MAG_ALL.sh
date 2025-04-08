@@ -32,3 +32,14 @@ python /gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/bin/multismash/workflow/
    /gxfs_work/geomar/smomw681/DATA/MAG_PacBio/AntiSMASH_PacBio/ \
    /gxfs_work/geomar/smomw681/DATA/MAG_PacBio/AntiSMASH_PacBio/AntiSMASH_BIN_PacBio.tsv
 #
+# ASG
+cd /gxfs_work/geomar/smomw681/DATA/
+python /gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/bin/multismash/workflow/scripts/count_regions.py \
+   /gxfs_work/geomar/smomw681/DATA/MAG_ASG/AntiSMASH_ASG \
+   /gxfs_work/geomar/smomw681/DATA/MAG_ASG/AntiSMASH_ASG/AntiSMASH_BIN_ASG.tsv
+
+# All MAGs
+cd /gxfs_work/geomar/smomw681/DATA/
+python /gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/bin/multismash/workflow/scripts/count_regions.py \
+   /gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_BIN \
+   /gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_BIN/AntiSMASH_BIN_ALL.tsv
