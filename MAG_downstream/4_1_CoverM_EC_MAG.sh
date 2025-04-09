@@ -46,6 +46,28 @@ coverm genome \
      --output-file ${CoverM_DIR}/${base}.coverm_proks_dRepMAGs.tsv
 done
 
+export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
+export EC_READs="/gxfs_work/geomar/smomw681/DATA/ERROR_CORRECTED"
+export CoverM_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/CoverM_ALL/CoverM_more"
+
+for sample in `ls ${EC_READs}/*.qc.ec.PE.fq.gz`;
+do
+base=$(basename $sample ".qc.ec.PE.fq.gz")
+coverm genome \
+     -t 18 \
+     --mapper minimap2-sr \
+     --min-read-percent-identity 0.95 \
+     --min-read-aligned-percent 0.80 \
+     --min-covered-fraction 10 \
+     --methods rpkm mean covered_fraction relative_abundance \
+     --interleaved ${EC_READs}/${base}.qc.ec.PE.fq.gz \
+     --genome-fasta-extension fa \
+     --genome-fasta-directory ${dREP_FILEs}/ \
+     --output-file ${CoverM_DIR}/${base}.coverm_proks_dRepMAGs.tsv
+done
+
+
+
 # export CoverM_PacBio_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/CoverM_PacBio"
 # export Canu_EC_Trim_FILEs=(/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly/Canu/*/*.trimmedReads.fasta.gz)
 
