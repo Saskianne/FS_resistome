@@ -68,6 +68,7 @@ done
 
 
 
+
 # export CoverM_PacBio_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/CoverM_PacBio"
 # export Canu_EC_Trim_FILEs=(/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly/Canu/*/*.trimmedReads.fasta.gz)
 
