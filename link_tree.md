@@ -97,10 +97,12 @@ Bioinformatic tools:
         - python=3.10
         - https://docs.antismash.secondarymetabolites.org/understanding_output/overview/
         - https://docs.antismash.secondarymetabolites.org/modules/clusterblast/
+        - mutliSMASH: https://github.com/zreitz/multismash
     - DeepARG (bioconda::deeparg, v1.0.4)
     - DeepBGC (v0.1.31)
         - https://github.com/Merck/deepbgc
         - 
+
     
 
 

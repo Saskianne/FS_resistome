@@ -14,9 +14,24 @@ ProdDIR="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL"
 ComplCDS_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/CDS_COMPLETE"
 ComplORF_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/PRODIGAL/ORF_COMPLETE"
 
-cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina
 ## STATS.xls files for
 
+
+## RAW_Illumina
+cd /gxfs_work/geomar/smomw681/DATA/RAWDATA
+sbatch -c 3 -p base --mem=50G --job-name=RAW_Illumina \
+     --wrap="perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Fasta_Files_stats_modified_jobname.pl \
+     ./ "
+##
+## RAW_PacBio
+cd /gxfs_work/geomar/smomw681/DATA/RAWDATA/PacBio_runs
+sbatch -c 3 -p base --mem=50G --job-name=RAW_PacBio \
+     --wrap="perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Fasta_Files_stats_modified_jobname.pl \
+     ./"
+##
+
+
+cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina
 ## CTG_Illumina
 sbatch -c 3 -p base --mem=50G --job-name=StatCTG_Illumina \
      --wrap="perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Fasta_Files_stats_modified_jobname.pl \
