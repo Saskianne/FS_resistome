@@ -39,3 +39,14 @@ done
 
 echo "END TIME": '' $(date)
 #
+
+
+echo "END TIME": '' $(date)
+#
+## Summary antiSMASH results for Jutta strains
+## 
+cd /gxfs_work/geomar/smomw681/DATA/
+conda activate AntiSMASH
+python /gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/bin/multismash/workflow/scripts/count_regions.py \
+   /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/AntiSMASH_PROKS/AntiSMASH_STRAINs/ \
+   /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CLASS_CONTIGs/AntiSMASH_PROKS/AntiSMASH_STRAINs/AntiSMASH_BIN_PacBio.tsv

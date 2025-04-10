@@ -42,4 +42,4 @@ python /gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/bin/multismash/workflow/
 cd /gxfs_work/geomar/smomw681/DATA/
 python /gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/bin/multismash/workflow/scripts/count_regions.py \
    /gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_BIN \
-   /gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_BIN/AntiSMASH_BIN_ALL.tsv
+   /gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_BIN/AntiSMASH_BIN_ALL_new.tsv
