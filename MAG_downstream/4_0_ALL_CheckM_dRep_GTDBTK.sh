@@ -28,6 +28,7 @@ sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
 
 export ASG_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/ASG_MAG"
 export CheckM2_OUTPUTs_ASG="${MAG_PacBio}/CheckM2_PacBio/CheckM2_ASG"
+export CheckM2_ASG="/gxfs_work/geomar/smomw681/DATA/MAG_ASG/CheckM_ASG"
 
 ## CheckM Run for ASG MAGs
 sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
@@ -37,17 +38,19 @@ sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
      --extension fa \
      --force \
      --input ${ASG_MAG_FILEs}/ \
-     --output-directory ${CheckM2_OUTPUTs_ASG}/ "
+     --output-directory ${CheckM2_ASG}/ "
+
 
 #
-################################################################################  
-## Split the ASG MAGs into single .fa files for further analysis 
-################################################################################ 
-cd /gxfs_work/geomar/smomw681/DATA/MAG_ASG/
-awk '/^>/ {header=substr($1,2); out="EunFrag_ASG_MAGs/EunFrag_ASG_" header ".fa"} {print >> out}' odEunFrag1.metagenome.1.primary.fa
-awk '/^>/ {header=substr($1,2); out="SpoLacu_ASG_MAGs/SpoLacu_ASG_" header ".fa"} {print >> out}' odSpoLacu1.metagenome.1.primary.fa
+# ################################################################################  
+# ## Split the ASG MAGs into single .fa files for further analysis 
+# ################################################################################ 
+# No need to do this because ASGs are not MAG but contigs and must be assembled first
+# cd /gxfs_work/geomar/smomw681/DATA/MAG_ASG/
+# awk '/^>/ {header=substr($1,2); out="EunFrag_ASG_MAGs/EunFrag_ASG_" header ".fa"} {print >> out}' odEunFrag1.metagenome.1.primary.fa
+# awk '/^>/ {header=substr($1,2); out="SpoLacu_ASG_MAGs/SpoLacu_ASG_" header ".fa"} {print >> out}' odSpoLacu1.metagenome.1.primary.fa
 
-# the contigs need too be assembled with MetaBAT2 and de-replicated
+# # the contigs need too be assembled with MetaBAT2 and de-replicated
 
 ######################################## 
 ## DEREPLICATE GENOMES 
@@ -93,6 +96,33 @@ sbatch -p base -c 18 -t 10-00:00 --qos=long --mem=240G --job-name=dREP \
      -ms 1000 --S_algorithm fastANI \
      -g ${PacBio_METABAT2_FILEs}/*.fa ${Illumina_METABAT2_FILEs}/*.fa ${ASG_MAG_FILEs}/*.fa "
 ##
+
+# this run kicked out ASG data due to pseudo-contamination problem in the ASG data (it was not MAG but contigs)
+# Rerun dRep with ASG data
+
+module load gcc12-env/12.3.0
+module load miniconda3/24.11.1
+conda activate dRep
+module load gcc/12.3.0
+module load boost/1.83.0
+module load cmake/3.27.4
+
+export dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG"
+export PacBio_METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_PacBio/METABAT2_PacBio/BIN_metaFlye"
+export Illumina_METABAT2_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/METABAT2_PROKS_BIN"
+export ASG_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ASG/METABAT2_ASG"
+
+## dRep with all + ASG bins 2025-04-13
+sbatch -p base -c 18 -t 10-00:00 --qos=long --mem=240G --job-name=dREP \
+     --output=dREP_ALL.out --error=dREP_ALL.err \
+     --wrap="dRep dereplicate -p 6 \
+     ${dREP_FILEs}/ --debug \
+     -pa 0.9 -sa 0.95 -nc 0.3 \
+     -l 50000 -comp 50 -con 5 \
+     -ms 1000 --S_algorithm fastANI \
+     -g ${PacBio_METABAT2_FILEs}/*.fa ${Illumina_METABAT2_FILEs}/*.fa ${ASG_MAG_FILEs}/*.fa "
+##
+
 
 ########################################
 ## Run CheckM2 for dereplicated MAG
