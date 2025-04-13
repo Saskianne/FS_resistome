@@ -40,6 +40,14 @@ sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
      --output-directory ${CheckM2_OUTPUTs_ASG}/ "
 
 #
+################################################################################  
+## Split the ASG MAGs into single .fa files for further analysis 
+################################################################################ 
+cd /gxfs_work/geomar/smomw681/DATA/MAG_ASG/
+awk '/^>/ {header=substr($1,2); out="EunFrag_ASG_MAGs/EunFrag_ASG_" header ".fa"} {print >> out}' odEunFrag1.metagenome.1.primary.fa
+awk '/^>/ {header=substr($1,2); out="SpoLacu_ASG_MAGs/SpoLacu_ASG_" header ".fa"} {print >> out}' odSpoLacu1.metagenome.1.primary.fa
+
+# the contigs need too be assembled with MetaBAT2 and de-replicated
 
 ######################################## 
 ## DEREPLICATE GENOMES 

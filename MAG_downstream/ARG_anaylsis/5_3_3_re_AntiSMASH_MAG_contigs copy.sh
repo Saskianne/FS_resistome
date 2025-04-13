@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH -c 18                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
+#SBATCH -c 8                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
 #SBATCH --job-name=AntSMASH
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to
-#SBATCH --mem=240G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=150G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=AntiSMASH_CTG_re.out
 #SBATCH --error=AntiSMASH_CTG_re.err
 #
@@ -23,24 +23,25 @@ echo "START TIME": '' $(date)
 # SRR15145662
 # SRR15145666
 
-export CTG_Illumina_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed"
-export DBDIR="/gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/lib/python3.10/site-packages/antismash/databases"
-export ANTISMASH_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_CTG"
+CTG_Illumina_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed"
+DBDIR="/gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/lib/python3.10/site-packages/antismash/databases"
+ANTISMASH_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_CTG"
 
 
-sbatch --cpus-per-task=10 --mem=100G --time=48:00:00 -wrap="antismash \
+sbatch --cpus-per-task=10 --mem=150G -t 48:00:00 --wrap="antismash \
      -t bacteria \
-     --cpus 8 \
-     --databases /gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/lib/python3.10/site-packages/antismash/databases/ \
-     --output-dir /gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_CTG/SRR15145662_contigs_min500/ \
+     --cpus 10 \
+     --databases ${DBDIR}/ \
+     --output-dir ${ANTISMASH_DIR}/SRR15145662_contigs_min500/ \
      --html-title SRR15145662_antiSMASH \
-     --output-basename SRR15145662 \
+     --output-basename SRR15145662_contigs_min500 \
      --genefinding-tool prodigal-m \
      /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed/SRR15145662_contigs_min500_renamed.fasta"
 
-sbatch --cpus-per-task=16 --mem=150G -t 48:00:00 --wrap="antismash \
+
+sbatch --cpus-per-task=10 --mem=150G -t 48:00:00 --wrap="antismash \
      -t bacteria \
-     --cpus 8 \
+     --cpus 10 \
      --databases ${DBDIR}/ \
      --output-dir ${ANTISMASH_DIR}/SRR15145666_contigs_min500/ \
      --html-title SRR15145666_antiSMASH \
