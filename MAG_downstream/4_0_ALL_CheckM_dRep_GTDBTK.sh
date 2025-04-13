@@ -26,8 +26,7 @@ sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
      --output-directory ${CheckM2_OUTPUTs}/ "
 #done
 
-export ASG_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/ASG_MAG"
-export CheckM2_OUTPUTs_ASG="${MAG_PacBio}/CheckM2_PacBio/CheckM2_ASG"
+export ASG_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ASG"
 export CheckM2_ASG="/gxfs_work/geomar/smomw681/DATA/MAG_ASG/CheckM_ASG"
 
 ## CheckM Run for ASG MAGs
@@ -155,6 +154,33 @@ CheckM2_STATs_PL="/gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Extract_bin_stats
 perl ${CheckM2_STATs_PL}  
 
 
+conda activate METABAT2
+cd /gxfs_work/geomar/smomw681/DATA
+CheckM2_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG/CheckM2_ALL_ASG"
+dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG/dereplicated_genomes"
+
+#for MAG in ${METABAT2_FILEs}/*.metabat2.pbbin.fasta.*.fa; 
+#do
+#base=$(basename $MAG .metabat2.pbbin.fasta.*.fa)
+# if [ ! -f ${CheckM2_OUTPUTs}/${base}.****]
+sbatch -p base --qos=long --mem=100G -c 16 -t 2-00:00\
+     --job-name=checkM2 --output=CheckM2_drep2.out --error=CheckM2_drep2.err\
+     --wrap="checkm2 predict \
+     --threads 16 \
+     --extension fa \
+     --force \
+     --input ${dREP_FILEs}/ \
+     --output-directory ${CheckM2_OUTPUTs}/ "
+# done
+
+## make statistics of CheckM2 files
+cd /gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG/CheckM2_ALL_ASG
+CheckM2_STATs_PL="/gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Extract_bin_stats_from_bin_stats_tree_tsv_file_from_checkm.pl"
+perl ${CheckM2_STATs_PL}  
+
+
+
+
 ########################################
 ## DETERMINE TAXONOMY OF dREPs
 ########################################
@@ -206,13 +232,16 @@ sbatch -p base -c 10 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK2 \
      --mash_db ${MASH_DB}/ \
      --out_dir ${GTDBTK_OUTPUTs}/ "
 
-# GTDBTK for ASG MAG
-export ASG_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ASG"
-export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/GTDBTK_ALL/GTDBTK_BIN/GTDBTK_ASG"
-sbatch -p base -c 6 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK2 \
-     --output=GTDBTK_MAG_ASG.out --error=GTDBTK_MAG_ASG.err \
+# GTDBTK for All including ASG, 2025-04-13
+export ALL_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG/CheckM2_ALL_ASG"
+export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/GTDBTK_ALL/GTDBTK_ALL_rerun"
+export MASH_DB="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/MASH_DB"
+export LD_LIBRARY_PATH="/gxfs_work/geomar/smomw681/.conda/envs/GTDBTK/lib/libgsl.so.27"
+export GTDBTK_DATA_PATH="/gxfs_work/geomar/smomw681/DATABASES/GTDBTK_db/db"
+sbatch -p base -c 6 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK3 \
+     --output=GTDBTK_drep_ALL.out --error=GTDBTK_drep_ASG.err \
      --wrap="gtdbtk classify_wf \
      --cpus 16 -x fa --full_tree \
-     --genome_dir ${MAG_ASG_FILEs}/ \
+     --genome_dir ${ALL_MAG_FILEs}/ \
      --mash_db ${MASH_DB}/ \
      --out_dir ${GTDBTK_OUTPUTs}/ "
