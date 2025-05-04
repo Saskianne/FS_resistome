@@ -158,7 +158,7 @@ conda activate METABAT2
 cd /gxfs_work/geomar/smomw681/DATA
 CheckM2_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG/CheckM2_ALL_ASG"
 dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG/dereplicated_genomes"
-
+export CHECKM2DB="/gxfs_work/geomar/smomw681/DATABASES/CheckM_db/CheckM2_database"
 #for MAG in ${METABAT2_FILEs}/*.metabat2.pbbin.fasta.*.fa; 
 #do
 #base=$(basename $MAG .metabat2.pbbin.fasta.*.fa)
@@ -233,15 +233,16 @@ sbatch -p base -c 10 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK2 \
      --out_dir ${GTDBTK_OUTPUTs}/ "
 
 # GTDBTK for All including ASG, 2025-04-13
-export ALL_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG/CheckM2_ALL_ASG"
+export ALL_MAG_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dRep_ALL_ASG/dereplicated_genomes"
 export GTDBTK_OUTPUTs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/GTDBTK_ALL/GTDBTK_ALL_rerun"
 export MASH_DB="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/METABAT2/MASH_DB"
 export LD_LIBRARY_PATH="/gxfs_work/geomar/smomw681/.conda/envs/GTDBTK/lib/libgsl.so.27"
-export GTDBTK_DATA_PATH="/gxfs_work/geomar/smomw681/DATABASES/GTDBTK_db/db"
-sbatch -p base -c 6 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK3 \
+export GTDBTK_DATA_PATH="/gxfs_work/geomar/smomw681/.conda/envs/MAG/share/gtdbtk-2.4.0/db/"
+# conda env config vars set GTDBTK_DATA_PATH="/gxfs_work/geomar/smomw681/.conda/envs/MAG/share/gtdbtk-2.4.0/db/"
+sbatch -p base -c 16 -t 10-00:00 --qos=long --mem=240G --job-name=GTDBTK3 \
      --output=GTDBTK_drep_ALL.out --error=GTDBTK_drep_ASG.err \
      --wrap="gtdbtk classify_wf \
-     --cpus 16 -x fa --full_tree \
+     --cpus 16 -x fa --full_tree --debug --pplacer_cpus 10 \
      --genome_dir ${ALL_MAG_FILEs}/ \
      --mash_db ${MASH_DB}/ \
      --out_dir ${GTDBTK_OUTPUTs}/ "

@@ -78,3 +78,28 @@ base=$(basename $input_file ".deeparg.out.mapping.ARG")
 perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Summarize_deeparg_out_mapping_ARG_with_InOutOptions_modified.pl $input_file DeepARG_ALL_Summary/${base}.deeparg_summary.tsv
 done
 #
+
+## DeepARG results MAG_drep
+#!/bin/bash
+
+cd /gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL/DeepARG_ORF
+
+output_file="DeepARG_MAG_all_hits_perSample.txt"
+> "$output_file"  # Clear or create output file
+
+grand_total=0
+echo -e "Sample\tARG_Count" > "$output_file"
+
+# Loop over all *.ARG files
+for file in *.mapping.ARG; do
+    # Count ARGs (skip header)
+    count=$(awk 'NR > 1 {print $1}' "$file" | wc -l)
+    basename=$(basename "$file" PROKS.deeparg.ORF.out.mapping.ARG)
+    echo -e "$basename\t$count" >> "$output_file"
+    grand_total=$((grand_total + count))
+done
+
+# Append the grand total to the file
+echo -e "Total_ARG_hits:\t$grand_total" >> "$output_file"
+
+
