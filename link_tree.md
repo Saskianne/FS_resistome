@@ -86,6 +86,8 @@ Bioinformatic tools:
         - https://github.com/MrOlm/drep
     - CoverM
         - https://github.com/wwood/CoverM
+        - coverM genome: https://wwood.github.io/CoverM/coverm-genome.html
+        - coverM contig: https://wwood.github.io/CoverM/coverm-contig.html#mapping-algorithm-options
     - GTDB-TK:
         - https://ecogenomics.github.io/GTDBTk/index.html
 
