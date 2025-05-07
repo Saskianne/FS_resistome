@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
 #SBATCH --mem=150G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=dARGs_Jutta_strains_1.out
-#SBATCH --error=dARGs_Jutta_strains_1.err
+#SBATCH --output=dARGs_Jutta_strains_2.out
+#SBATCH --error=dARGs_Jutta_strains_2.err
 # here starts your actual program call/computation
 #
 
@@ -23,10 +23,34 @@ Prod_ORF_COMPLETE="/gxfs_work/geomar/smomw681/DATA/GENOME_Jutta/PRODIGAL_strains
 
 
 echo "START TIME": '' $(date)
+
+# In_House_genomes
+# for i in ${Prod_ORF_COMPLETE}/*.COMPLETE.ORFs.faa;
+# do
+# base=$(basename $i ".COMPLETE.ORFs.faa")
+# if [ ! -f ${DeepARGsDIR}/${base}.deeparg.out ]; then
+# deeparg predict \
+#     --model LS \
+#     -i $i \
+#     -o ${DeepARGsDIR}/${base}.deeparg.out \
+#     -d ${DBDIR}/ \
+#     --type prot \
+#     --min-prob 0.8 \
+#     --arg-alignment-identity 50 \
+#     --arg-alignment-evalue 1e-10 \
+#     --arg-num-alignments-per-entry 1000;
+# elif [ -f ${DeepARGsDIR}/${base}.deeparg.out ]; then
+#     echo "Deeparg file for ${base} already exists"
+# else 
+#     echo "Deeparg file for ${base} does not exist and something went wrong"
+# fi
+# done
+
+# Eurofins genomes + renamed strain genomes
 for i in ${Prod_ORF_COMPLETE}/*.COMPLETE.ORFs.faa;
 do
 base=$(basename $i ".COMPLETE.ORFs.faa")
-if [ ! -f ${DeepARGsDIR}/${base}.deeparg.out ]; then
+if [ ! -f ${DeepARGsDIR}/${base}.deeparg.out.mapping.ARG ]; then
 deeparg predict \
     --model LS \
     -i $i \
@@ -37,7 +61,7 @@ deeparg predict \
     --arg-alignment-identity 50 \
     --arg-alignment-evalue 1e-10 \
     --arg-num-alignments-per-entry 1000;
-elif [ -f ${DeepARGsDIR}/${base}.deeparg.out ]; then
+elif [ -f ${DeepARGsDIR}/${base}.deeparg.out.mapping.ARG ]; then
     echo "Deeparg file for ${base} already exists"
 else 
     echo "Deeparg file for ${base} does not exist and something went wrong"
