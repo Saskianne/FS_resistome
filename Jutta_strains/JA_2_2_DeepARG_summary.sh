@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ## Summarize DeepARG results by creating a hitmap matrix  
-
+cd /gxfs_work/geomar/smomw681/DATA/GENOME_Jutta/ARG_Analysis_strains
 # Define the output file path 
-output="/gxfs_work/geomar/smomw681/DATA/GENOME_Jutta/ARG_Analysis_strains/DeepARG_hitmap_strains_ALL.tsv"
+output="/gxfs_work/geomar/smomw681/DATA/GENOME_Jutta/ARG_Analysis_strains/DeepARG_hitmap_strains_ALL_re.tsv"
 
 # Create a temporary directory for intermediate counts
 tmpdir=$(mktemp -d --tmpdir=/gxfs_work/geomar/smomw681/DATA/GENOME_Jutta/ARG_Analysis_strains)
