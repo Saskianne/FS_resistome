@@ -105,6 +105,12 @@ Bioinformatic tools:
         - https://github.com/Merck/deepbgc
         - 
 
+
+- PROKKA
+    - prokka (bioconda::prokka, v1.14.6)
+    - https://github.com/tseemann/prokka
+
+- BLAST+
     
 
 

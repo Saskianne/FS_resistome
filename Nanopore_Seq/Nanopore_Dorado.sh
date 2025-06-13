@@ -5,8 +5,8 @@
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
 #SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=Dorado_Nanopore_sample1to4_1.out
-#SBATCH --error=Dorado_Nanopore_sample1to4_1.err
+#SBATCH --output=Dorado_Nanopore_sample1to4_1_demux.out
+#SBATCH --error=Dorado_Nanopore_sample1to4_1_demux.err
 # here starts your actual program call/computation
 #
 echo "START TIME": $(date)
@@ -25,8 +25,11 @@ DORADO_MODEL_DIR="/gxfs_work/geomar/smomw681/DORADO/dna_r9.4.1_e8_hac@v3.3"
 
 # run dorado basecaller and demux
 # I ran them separately, but it should be possible to run them in one command as pipe
-/gxfs_work/geomar/smomw681/DORADO/dorado-0.9.5-linux-x64-cuda-11.8/bin/dorado basecaller $DORADO_MODEL_DIR/ $RAW_DIR/ --kit-name SQK-RBK004 --trim adapters --device cpu --output-dir $BASECALL_DIR/ \ | 
-/gxfs_work/geomar/smomw681/DORADO/dorado-0.9.5-linux-x64-cuda-11.8/bin/dorado demux --kit-name SQK-RBK004 --output-dir $DEMUX_DIR/ --emit-fastq --threads 16
-
+#echo Start Basecalling
+#/gxfs_work/geomar/smomw681/DORADO/dorado-0.9.5-linux-x64-cuda-11.8/bin/dorado basecaller $DORADO_MODEL_DIR/ $RAW_DIR/ --kit-name SQK-RBK004 --trim adapters --device cpu --output-dir $BASECALL_DIR/ >  sample1to4_basecalled.bam 
+#echo done with basecalling
+echo Start Demultiplexing
+/gxfs_work/geomar/smomw681/DORADO/dorado-0.9.5-linux-x64-cuda-11.8/bin/dorado demux $BASECALL_DIR/*.bam --kit-name SQK-RBK004 --output-dir $DEMUX_DIR/ --emit-fastq --threads 16
+echo done with demultiplexing
 
 echo "END TIME": $(date)
