@@ -30,10 +30,26 @@ do
 base=$(basename "$file" .fasta)
 echo "Starting prokka for file: $base"
 
-prokka --kingdom Bacteria --quiet --outdir ${PROKKA_DIR}/${base}_prokka --prefix J_ARG1 --cpus 8 --locustag ${base} $file
+prokka --kingdom Bacteria --quiet --outdir ${PROKKA_DIR}/${base}_prokka --prefix J_ARG1_${base} --cpus 8 --locustag ${base} $file
 
 echo "Finished prokka for file: $base"
 done
 
 echo end prokka
 echo "END TIME": $(date)
+
+# cd /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA
+# GENOME_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/WGS_JUTTA_STRAIN"
+# PROKKA_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN"
+# GENOME_FILES=${GENOME_DIR}/*.fasta
+# for file in ${GENOME_FILES}
+# do
+# base=$(basename $file .fasta)
+#     for datei in ${PROKKA_DIR}/${base}_prokka/*
+#         do mv $datei ${PROKKA_DIR}/${base}_prokka/${base}.${datei##*.}
+#     done
+# done
+cat > /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.faa
+for file in ${PROKKA_DIR}/*/*.faa; do
+    cat $file >> /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.faa
+done
