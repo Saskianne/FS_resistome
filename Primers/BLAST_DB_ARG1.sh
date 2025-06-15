@@ -4,7 +4,7 @@
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
-#SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=150G                 # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --output=BLAST_DB_Jutta_ARG1.out
 #SBATCH --error=BLAST_DB_Jutta_ARG1.err
 # here starts your actual program call/computation
@@ -29,10 +29,11 @@ echo "START TIME": $(date)
 echo start BLAST DB making 
 
 echo "Starting BLAST DB making for file: for concatenated .faa file"
-makeblastdb -in ${PROKKA_DIR}/J_ARG1_WGS_prokkaCONCAT.faa /
-     -title J_ARG1_WGS_prokkaCONCAT /
-     -input_type fasta /
-     -dbtype prot
+makeblastdb -in ${PROKKA_DIR}/J_ARG1_WGS_prokkaCONCAT.faa \
+     -dbtype prot \
+     -title "J_ARG1_WGS_prokkaCONCAT" \
+     -input_type fasta 
+     
 echo "Finished BLAST DB making for file in ${BLAST_DB_DIR}"
 
 echo end BLAST DB making 

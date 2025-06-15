@@ -30,7 +30,7 @@ do
 base=$(basename "$file" .fasta)
 echo "Starting prokka for file: $base"
 
-prokka --kingdom Bacteria --quiet --outdir ${PROKKA_DIR}/${base}_prokka --prefix J_ARG1_${base} --cpus 8 --locustag ${base} $file
+prokka --kingdom Bacteria --quiet --outdir ${PROKKA_DIR}/${base}_prokka --prefix J_ARG1_${base} --cpus 8 --locustag ${base}_ $file
 
 echo "Finished prokka for file: $base"
 done
