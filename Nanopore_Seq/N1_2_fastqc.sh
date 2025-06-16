@@ -34,7 +34,7 @@ QC_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/QC_NANOPORE"
 DEMUX_DIR_min1kb="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/DEMUX_FILTERED_min1kbp"
 FASTQC_DIR_min1kbp="/gxfs_work/geomar/smomw681/NANOPORE_DATA/QC_NANOPORE/FASTQC_Nanopore_min1kbp"
 FILTERED_FILES=${DEMUX_DIR_min1kb}/*fastq
-fastqc --memory 10GB -f fastq -t 4 -noextract -o ${FASTQC_DIR_min1kbp} ${FILTERED_FILESS[@]} 
+fastqc --memory 10000 -f fastq -t 4 -noextract -o ${FASTQC_DIR_min1kbp} ${FILTERED_FILES[@]} 
 multiqc -o ${FASTQC_DIR_min1kbp} -n Sample1to4_dorado_fastqc_summary -i Sample1to4_dorado_fastqc_summary -p  ${FASTQC_DIR_min1kbp}   
 
 

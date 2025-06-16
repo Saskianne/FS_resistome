@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH -c 16                      # 1 core per job (i.e., if you need 8 cores, you would have to use "-c 8")
-#SBATCH --job-name=CANU
+#SBATCH --job-name=CANU_EC
 #SBATCH -t 10-00:00                # Runtime in D-HH:MM
 #SBATCH --qos=long                  # quality of service parameters
 #SBATCH -p base                  # Partition to submit to                  # Partition to submit to
 #SBATCH --mem=200G                 # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --output=N2_1_Canu_1.out
-#SBATCH --error=N2_1_Canu_1.err
+#SBATCH --output=N2_1_Canu_EC_1.out
+#SBATCH --error=N2_1_Canu_EC_1.err
 # here starts your actual program call/computation
 #
 echo "START TIME": $(date)
@@ -30,7 +30,7 @@ for file in ${DEMUX_DIR_min1kb}/*.fastq
     do 
     base=$(basename $file .fastq)
     barcodename=${base#7b1a9882-af73-4933-8538-b8594806f155_}
-    canu -p ${barcodename} -d ${CANU_DIR}/${barcodename} minMemory=20 minThreads=8 \
+    canu -correct -p ${barcodename} -d ${CANU_DIR}/${barcodename} minMemory=20 minThreads=8 \
     genomeSize=7m -nanopore-raw $file
 done
 

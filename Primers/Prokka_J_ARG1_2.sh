@@ -17,7 +17,7 @@ echo "START TIME": $(date)
 conda activate PROKKA
 cd /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA
 
-PROKKA_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN"
+PROKKA_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_try"
 GENOME_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/WGS_JUTTA_STRAIN"
 # Rename the WGS fasta file names as short as possible. 
 # If the gene name exceeds certain length, prokka will through an error. 
@@ -30,13 +30,13 @@ do
 base=$(basename "$file" .fasta)
 echo "Starting prokka for file: $base"
 
-prokka --kingdom Bacteria --quiet --outdir ${PROKKA_DIR}/${base}_prokka --prefix J_ARG1_${base} --cpus 8 --locustag ${base}_ $file
+prokka --kingdom Bacteria --quiet --outdir ${PROKKA_DIR}/${base}_prokka --addgenes --prefix J_ARG1_${base} --cpus 8 --locustag ${base}_ $file
 
 echo "Finished prokka for file: $base"
 done
 
 echo end prokka
-
+echo "END TIME": $(date)
 
 # cd /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA
 # GENOME_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/WGS_JUTTA_STRAIN"
@@ -49,17 +49,7 @@ echo end prokka
 #         do mv $datei ${PROKKA_DIR}/${base}_prokka/${base}.${datei##*.}
 #     done
 # done
-
-# Concatenate all the faa files into one file
 cat > /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.faa
 for file in ${PROKKA_DIR}/*/*.faa; do
     cat $file >> /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.faa
 done
-
-# cat > /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT_with_gene.faa
-# cat /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.faa \
-#  >> /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT_with_gene.faa
-
-sed "/^>/ s/ /_/g" /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.faa > /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT_with_gene.faa
-
-echo "END TIME": $(date)

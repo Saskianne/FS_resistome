@@ -29,9 +29,9 @@ echo "START TIME": $(date)
 echo start BLAST DB making 
 
 echo "Starting BLAST DB making for file: for concatenated .faa file"
-makeblastdb -in ${PROKKA_DIR}/J_ARG1_WGS_prokkaCONCAT.faa \
+makeblastdb -in ${PROKKA_DIR}/J_ARG1_WGS_prokkaCONCAT_with_gene.faa \
      -dbtype prot \
-     -title "J_ARG1_WGS_prokkaCONCAT" \
+     -title "J_ARG1_WGS_prokkaCONCAT_gene" \
      -input_type fasta 
      
 echo "Finished BLAST DB making for file in ${BLAST_DB_DIR}"

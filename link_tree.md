@@ -123,6 +123,9 @@ Bioinformatic tools:
     - 
     
 
+EGGnog
+    - http://eggnog-mapper.embl.de/
+
 
 General understanding:
 - Metagenome assembly with metaSPAdes: https://carpentries-lab.github.io/metagenomics-analysis/04-assembly/index.html

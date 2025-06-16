@@ -9,7 +9,7 @@
 #
 
 cd /gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/DEMUX_FILTERED_min1kbp
-MIN1kbp_CONTIGs="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/DEMUX_FILTERED_min1kbp"
+MIN1kbp_CONTIGs="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/DEMUX_FILTERED_min1kbp/DEMUX_min1kbp_new"
 DEMUX_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED"
 
 echo "START TIME": '' $(date)
@@ -19,7 +19,7 @@ for i in ${DEMUX_DIR}/*.fastq; do
      newfile="${barcodename}_min1kbp.fastq"
      if [ ! -f ${MIN1kbp_CONTIGs}/${newfile} ]; then
           echo working with $i
-          perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_filter_contigs_on_size.pl $i 1000
+          perl /gxfs_work/geomar/smomw681/NANOPORE_DATA/NANOPORE_SCRIPTs/SL_filter_contigs_on_minbp_FASTQ.pl $i 1000
      else
           echo "File already exists"
      fi
