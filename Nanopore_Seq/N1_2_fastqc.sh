@@ -23,11 +23,20 @@ DEMUX_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED"
 QC_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/QC_NANOPORE"
 
 
-fastqc --memory 10GB -f fastq -t 4 -noextract -o ${QC_DIR} ${BASECALL_DIR}/calls_2025-06-10_T13-56-31.fastq
+# # Run FastQC on Raw Nanopore reads
+# fastqc --memory 10GB -f fastq -t 4 -noextract -o ${QC_DIR} ${BASECALL_DIR}/calls_2025-06-10_T13-56-31.fastq
 
-FILES=${DEMUX_DIR}/*fastq
-fastqc --memory 10GB -f fastq -t 4 -noextract -o ${QC_DIR} ${FILES[@]} 
-multiqc -o ${QC_DIR} -n Sample1to4_dorado_fastqc_summary -i Sample1to4_dorado_fastqc_summary -p  ${QC_DIR}   
+# # Run FastQC on Demultiplexed Nanopore reads
+# FILES=${DEMUX_DIR}/*fastq
+# fastqc --memory 10GB -f fastq -t 4 -noextract -o ${QC_DIR} ${FILES[@]} 
+# multiqc -o ${QC_DIR} -n Sample1to4_dorado_fastqc_summary -i Sample1to4_dorado_fastqc_summary -p  ${QC_DIR}   
+
+DEMUX_DIR_min1kb="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/DEMUX_FILTERED_min1kbp"
+FASTQC_DIR_min1kbp="/gxfs_work/geomar/smomw681/NANOPORE_DATA/QC_NANOPORE/FASTQC_Nanopore_min1kbp"
+FILTERED_FILES=${DEMUX_DIR_min1kb}/*fastq
+fastqc --memory 10GB -f fastq -t 4 -noextract -o ${FASTQC_DIR_min1kbp} ${FILTERED_FILESS[@]} 
+multiqc -o ${FASTQC_DIR_min1kbp} -n Sample1to4_dorado_fastqc_summary -i Sample1to4_dorado_fastqc_summary -p  ${FASTQC_DIR_min1kbp}   
+
 
 echo "END TIME": '' $(date)
 ###

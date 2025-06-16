@@ -12,26 +12,26 @@
 echo "START TIME": $(date)
 module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
-module parallel/20230822
+# module parallel/20230822
 
 conda activate PacBio_Assembly
 cd /gxfs_work/geomar/smomw681/NANOPORE_DATA/CANU_NANOPORE
-DEMUX_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED"
+DEMUX_DIR_min1kb="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/DEMUX_FILTERED_min1kbp"
 CANU_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/CANU_NANOPORE"
 
-# iterate over fastq files
-FILES=($DEMUX_DIR/*.fastq)
+
+# FILES=($DEMUX_DIR/*.fastq)
 # cat FILES | parallel -j 4 "base=$(basename -s {} "7b1a9882-af73-4933-8538-b8594806f155_") ; \
 #     canu  -p ${base} -d ${CANU_DIR}/${base} minMemory=20 minThreads=8 \
 #     genomeSize=7m -nanopore ${DEMUX_DIR}/*.fastq"
 
-for file in ${DEMUX_DIR}/*.fastq
+# iterate over fastq files
+for file in ${DEMUX_DIR_min1kb}/*.fastq
     do 
     base=$(basename $file .fastq)
     barcodename=${base#7b1a9882-af73-4933-8538-b8594806f155_}
     canu -p ${barcodename} -d ${CANU_DIR}/${barcodename} minMemory=20 minThreads=8 \
-    genomeSize=6m errorRate=0.5 -nanopore-raw $file
+    genomeSize=7m -nanopore-raw $file
 done
 
 echo "END TIME": $(date)
-

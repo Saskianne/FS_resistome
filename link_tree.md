@@ -105,12 +105,22 @@ Bioinformatic tools:
         - https://github.com/Merck/deepbgc
         - 
 
+- DORADO (v1.0.1/v9.5)
+    - Download the ML-based basecaller model to avoid the download error and the interruption of the run
+    - https://github.com/nanoporetech/dorado
+    - https://dorado-docs.readthedocs.io
+        - Specific for v9.5: https://dorado-docs.readthedocs.io/en/0.9.5/
+    
 
 - PROKKA
     - prokka (bioconda::prokka, v1.14.6)
     - https://github.com/tseemann/prokka
 
 - BLAST+
+    - conda install bioconda::blast
+    - https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html
+    - https://github.com/ncbi/blast_plus_docs
+    - 
     
 
 
