@@ -30,7 +30,7 @@ for file in ${DEMUX_DIR}/*.fastq
     base=$(basename $file .fastq)
     barcodename=${base#7b1a9882-af73-4933-8538-b8594806f155_}
     canu -p ${barcodename} -d ${CANU_DIR}/${barcodename} minMemory=20 minThreads=8 \
-    genomeSize=7m -nanopore $file
+    genomeSize=6m errorRate=0.5 -nanopore-raw $file
 done
 
 echo "END TIME": $(date)
