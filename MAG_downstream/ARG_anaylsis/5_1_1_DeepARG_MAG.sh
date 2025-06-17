@@ -80,3 +80,5 @@ OUTPUT_FILE="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/DeepARG_ALL/DeepARG_ALL/dee
 perl /gxfs_work/geomar/smomw681/DATA/MAG_Files/SL_Summarize_deeparg_out_mapping_ARG_with_InOutOptions.pl $input_file DeepARG_ALL_Summary/${base}.deeparg_summary.tsv
 done
 #
+
+
