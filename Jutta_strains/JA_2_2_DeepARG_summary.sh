@@ -21,6 +21,8 @@ for file in "${arg_files[@]}"; do
     cut -f2 "$tmpdir/$sample.count" >> "$tmpdir/all_args.list"
 done
 
+tmpdir="/gxfs_work/geomar/smomw681/DATA/GENOME_Jutta/ARG_Analysis_strains/tmp.2cYe3OJtjc"
+
 # Step 3: Get unique list of ARGs (sorted)
 sort "$tmpdir/all_args.list" | uniq > "$tmpdir/unique_args.txt"
 mapfile -t args_array < "$tmpdir/unique_args.txt"
@@ -44,6 +46,19 @@ for file in "${arg_files[@]}"; do
     done < "$tmpdir/$sample.count"
 
     printf "%s" "$sample"
+    for arg in "${args_array[@]}"; do
+        printf "\t%d" "${counts[$arg]:-0}"
+    done
+    printf "\n"
+done >> "$output"
+
+for file in "${arg_files[@]}"; do
+    sample=$(basename "$file" .deeparg.out.mapping.ARG)
+    declare -A counts
+    while IFS=$'\t' read -r s arg count; do 
+        counts["$arg"]="$count"
+    printf "%s" "$sample"
+    done
     for arg in "${args_array[@]}"; do
         printf "\t%d" "${counts[$arg]:-0}"
     done
