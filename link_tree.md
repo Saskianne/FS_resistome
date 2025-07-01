@@ -121,9 +121,17 @@ Bioinformatic tools:
     - https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html
     - https://github.com/ncbi/blast_plus_docs
     - 
-    
 
-EGGnog
+- CAT/BAT:
+    - Contig Annotation Tool (CAT) and Bin Annotation Tool (BAT)
+    - https://github.com/MGXlab/CAT_pack/blob/master/README.md
+    
+- MMseqs2
+    - Metagenomic contig classification / DB search 
+    - https://github.com/soedinglab/MMseqs2
+
+- eggNOG
+    - More accurate annotation based on the
     - http://eggnog-mapper.embl.de/
 
 

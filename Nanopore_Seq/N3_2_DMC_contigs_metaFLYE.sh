@@ -16,10 +16,11 @@ cd /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/DEEPMicroClass
 
 echo "START TIME": '' $(date)
 
-for i in /gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed/*_contigs_min500_renamed.fasta;
+for i in /gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/* ;
 do
 echo working with $i
-CONTIGsDir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed"; 
+     barcodename=${base#7b1a9882-af73-4933-8538-b8594806f155_}
+CONTIGsDir="/gxfs_work/geomar/smomw681/NANOPORE_DATA/metaFLYE_Nanopore/*/assembly.fasta"; 
 base=$(basename $i "_min500bp.fasta");
 OUTPUTDir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/DEEPMicroClass"
 DeepMicroClass predict \
