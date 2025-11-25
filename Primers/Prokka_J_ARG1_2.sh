@@ -53,3 +53,9 @@ cat > /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRA
 for file in ${PROKKA_DIR}/*/*.faa; do
     cat $file >> /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.faa
 done
+
+PROKKA_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN"
+> /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.ffn
+for file in ${PROKKA_DIR}/*/*.ffn; do
+    cat $file >> /gxfs_work/geomar/smomw681/NANOPORE_DATA/ARG_BLAST_JUTTA/PROKKA_JUTTA_STRAIN/J_ARG1_WGS_prokkaCONCAT.ffn
+done
