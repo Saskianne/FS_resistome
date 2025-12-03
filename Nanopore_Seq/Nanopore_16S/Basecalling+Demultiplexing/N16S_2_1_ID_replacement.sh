@@ -14,7 +14,6 @@ module load gcc12-env/12.3.0
 module load miniconda3/24.11.1
 module load cuda/11.8.0
 
-conda activate DORADO_1.3.0
 cd /gxfs_work/geomar/smomw681/NANOPORE_DATA/16S_AMPLICON_SEQ
 RAW_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/16S_AMPLICON_SEQ/NANOPORE_16S_Run1/pod5"
 BASECALL_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/BASECALLING/NANOPORE_16S_Run1_BASECALLED"
@@ -30,20 +29,25 @@ CONCAT_FILE="/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED/16S_Amplicon_
 
 # Call the Barcode-sample-Table, rename the ID accordingly and copy it to the file
 # replace the ID in the first line of each sequence 
+> $CONCAT_FILE
 mapfile="/gxfs_work/geomar/smomw681/NANOPORE_DATA/N16S_Run1_barcode_sample_table.txt"
-tail -n +2 "$mapfile" | while read -r Run Barcode Sample_ID; do
-    echo "Processing $Barcode -> $Sample_ID"
-    for fastq in $DEMUX_DIR/"$Run"/trimmed_fastq/"$Barcode"/*.fastq; do 
-        awk -y id="$Sample_ID" '
+while read -r Run Barcode Sample_ID; do
+    echo "Processing $Barcode -> $Sample_ID in run $Run"
+    for fastq in "$DEMUX_DIR/$Run/fastq_pass/$Barcode"/*.fastq; do
+        [[ ! -e "$fastq" ]] && continue 
+        echo "Modifying: $fastq and replace the ID to $Sample_ID"
+        awk -v id="$Sample_ID" '
             NR % 4 == 1 {
-                printf("@%s_%d\n", id, ++c);
-                next;
+                match($0, /^@[^ \t]+/);
+                rest = substr($0, RLENGTH + 1);
+                printf("@%s\t%s\n", id, rest);
+                next
             }
-            { Print }
+            { print }
         ' "$fastq" >> "$CONCAT_FILE"
     done
     echo 
-done
+done < <(tail -n +2 "$mapfile")
 
 echo done with Changing ID for the 16S run1
 
