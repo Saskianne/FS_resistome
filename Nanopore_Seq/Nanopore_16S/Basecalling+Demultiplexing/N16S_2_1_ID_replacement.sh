@@ -53,6 +53,16 @@ echo done with Changing ID for the 16S run1
 
 echo "END TIME": $(date)
 
+DEMUX_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/NANOPORE_16S_Run1_DEMUX/fastq_pass"
+FILES="$DEMUX_DIR/barcode*/*.fastq"
+for file in ${FILES[@]}; do
+    BASENAME="$(basename $(dirname $file))"
+    echo change the filename from $(basename $file) to $(basename $file .fastq)_$BASENAME.fastq
+    NEWFILE="$(dirname $file)/$(basename $file .fastq)_$BASENAME.fastq"
+    mv $file $NEWFILE
+done
+
+
 # mapfile="/gxfs_work/geomar/smomw681/NANOPORE_DATA/N16S_Run1_barcode_sample_table.txt"
 # while read -r Barcode Sample_ID; do
 #     for barcode in $Barcode; do
