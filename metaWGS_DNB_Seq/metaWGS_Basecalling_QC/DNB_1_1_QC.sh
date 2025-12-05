@@ -22,7 +22,7 @@ echo Start QC
 
 mkdir $WGS_RAW_DIR/DNB_WGS_RAW_QC
 RAW_QC_DIR="$WGS_RAW_DIR/DNB_WGS_RAW_QC"
-RAW_QC_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/RAW_QC"
+
 fastqc --memory 150GB -f fastq -t 10 -noextract -o $RAW_QC_DIR ${metaWGS_FILES[@]}
 multiqc -o ${RAW_QC_DIR} -n FWS_metaWGS_RAW_fastqc_summary -i FWS_metaWGS_RAW_fastqc_summary -p ${RAW_QC_DIR}
 

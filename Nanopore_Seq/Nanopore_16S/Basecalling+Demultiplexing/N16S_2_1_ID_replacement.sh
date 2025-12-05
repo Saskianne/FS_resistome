@@ -24,14 +24,14 @@ CONCAT_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED"
 echo Start Changing ID for the 16S run1
 
 # make a concatenated fastq file with new ID
-> "/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED/16S_Amplicon_Seq_concatenated.fastq"
-CONCAT_FILE="/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED/16S_Amplicon_Seq_concatenated.fastq"
+> "/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED/16S_Amplicon_Seq_concat.fastq"
+CONCAT_FILE="/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED/16S_Amplicon_Seq_concat.fastq"
+mapfile="/gxfs_work/geomar/smomw681/NANOPORE_DATA/N16S_Run1_barcode_sample_table.txt"
 
 # Call the Barcode-sample-Table, rename the ID accordingly and copy it to the file
 # replace the ID in the first line of each sequence 
 > $CONCAT_FILE
-mapfile="/gxfs_work/geomar/smomw681/NANOPORE_DATA/N16S_Run1_barcode_sample_table.txt"
-while read -r Run Barcode Sample_ID; do
+while read -r Run Barcode Sample_ID; do 
     echo "Processing $Barcode -> $Sample_ID in run $Run"
     for fastq in "$DEMUX_DIR/$Run/fastq_pass/$Barcode"/*.fastq; do
         [[ ! -e "$fastq" ]] && continue 
@@ -40,14 +40,21 @@ while read -r Run Barcode Sample_ID; do
             NR % 4 == 1 {
                 match($0, /^@[^ \t]+/);
                 rest = substr($0, RLENGTH + 1);
-                printf("@%s\t%s\n", id, rest);
+                count = ++c;
+                printf("@%s", id);
+                printf("");
+                printf("_%d", count);
+                printf("%s\n", rest);
                 next
             }
             { print }
+
         ' "$fastq" >> "$CONCAT_FILE"
+        count=0
     done
     echo 
-done < <(tail -n +2 "$mapfile")
+done < $mapfile
+
 
 echo done with Changing ID for the 16S run1
 
@@ -69,5 +76,3 @@ done
 #         echo "Processing $barcode -> $Sample_ID"
 #     done
 # done
-
-sed s\
