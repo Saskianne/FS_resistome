@@ -18,6 +18,7 @@ cd /gxfs_work/geomar/smomw681/NANOPORE_DATA/16S_AMPLICON_SEQ
 RAW_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/16S_AMPLICON_SEQ/NANOPORE_16S_Run1/pod5"
 BASECALL_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/BASECALLING/NANOPORE_16S_Run1_BASECALLED"
 DEMUX_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED"
+RENAMED_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/DEMULTIPLEXED/NANOPORE_16S_RENAMED"
 CONCAT_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED"
 # DORADO directory: cd /gxfs_work/geomar/smomw681/DORADO
 
@@ -25,7 +26,7 @@ echo Start Changing ID for the 16S run1
 
 # make a concatenated fastq file with new ID
 > "/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED/16S_Amplicon_Seq_concat.fastq"
-CONCAT_FILE="/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED/16S_Amplicon_Seq_concat.fastq"
+CONCAT_FILE="/gxfs_work/geomar/smomw681/NANOPORE_DATA/CONCATENATED/N16S_Seq_concat_filt.fastq"
 mapfile="/gxfs_work/geomar/smomw681/NANOPORE_DATA/N16S_Run1_barcode_sample_table.txt"
 
 # Call the Barcode-sample-Table, rename the ID accordingly and copy it to the file
@@ -35,7 +36,9 @@ while read -r Run Barcode Sample_ID; do
     echo "Processing $Barcode -> $Sample_ID in run $Run"
     for fastq in "$DEMUX_DIR/$Run/fastq_pass/$Barcode"/*.fastq; do
         [[ ! -e "$fastq" ]] && continue 
+        Sample_ID="${Sample_ID//$'\r'/}"
         echo "Modifying: $fastq and replace the ID to $Sample_ID"
+        renamed_file="${RENAMED_DIR}/${Sample_ID}_renamed.fastq"
         awk -v id="$Sample_ID" '
             NR % 4 == 1 {
                 match($0, /^@[^ \t]+/);
@@ -48,13 +51,17 @@ while read -r Run Barcode Sample_ID; do
                 next
             }
             { print }
-
-        ' "$fastq" >> "$CONCAT_FILE"
+        ' "$fastq" > $renamed_file
         count=0
     done
     echo 
 done < $mapfile
 
+# after the trimming, concatenate all renamed fastq files into one
+> $CONCAT_FILE
+for fastq in $RENAMED_DIR/*.fastq; do
+    cat $fastq >> $CONCAT_FILE
+done
 
 echo done with Changing ID for the 16S run1
 
