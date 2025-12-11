@@ -22,7 +22,10 @@ NANOCLUST_DIR="/gxfs_work/geomar/smomw681/NANOPORE_DATA/NanoCLUST"
 DB_DIR="/gxfs_work/geomar/smomw681/DATABASES/NCBI_16S_DB"
 TaxDB_DIR="/gxfs_work/geomar/smomw681/DATABASES/NCBI_16S_DB/TAX_DB"
 
-echo Start 16S rRNA identification using EMU
+echo Start 16S rRNA identification using NANOCLUST
+
+# Test run
+# nextflow run $NANOCLUST_DIR/main.nf -profile test,conda
 
 # mkdir /gxfs_work/geomar/smomw681/NANOPORE_DATA/NanoCLUST
 nextflow run $NANOCLUST_DIR/main.nf \ 
@@ -31,5 +34,5 @@ nextflow run $NANOCLUST_DIR/main.nf \
              --db $DB_DIR \ 
              --tax $TaxDB_DIR
 
-echo Finished 16S rRNA identification using EMU
+echo Finished 16S rRNA identification using NANOCLUST
 echo "END TIME": $(date)
