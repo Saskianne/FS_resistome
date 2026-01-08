@@ -36,7 +36,7 @@ if [ ! -f ${PROKS_DIR}/${file}_Proks.fna ]; then
         --fasta $i \
         --class Prokaryote \
         --output ${PROKS_DIR}/${base}_ctg_Proks.fna \
-        --tsv ${DMC_DIR}/${base}_contigs_min500_renamed_pred_onehot_hybrid.tsv; 
+        --tsv ${DMC_DIR}/${base}_ctg_min500_renamed.fasta_pred_onehot_hybrid.tsv; 
 else
     echo "File already exists"
 fi            
