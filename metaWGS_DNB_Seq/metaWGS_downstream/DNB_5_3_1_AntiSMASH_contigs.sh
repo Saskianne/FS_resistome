@@ -17,8 +17,8 @@ conda activate AntiSMASH
 echo "START TIME": '' $(date)
 
 # Set up variables
-dREP_FILEs="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/dREP_ALL/dereplicated_genomes"
-CTG_PacBio_DIR="/gxfs_work/geomar/smomw681/DATA/PacBio_Assembly/metaFlye"
+CTGs_renamed_DIR="/gxfs_work/geomar/smomw681/BGI_META_WGS_DATA/BGI_DATA_SUNWOO/ASSEMBLY/CTGs_renamed"
+
 CTG_Illumina_Dir="/gxfs_work/geomar/smomw681/DATA/MAG_Illumina/CONTIGs_renamed"
 DBDIR="/gxfs_work/geomar/smomw681/.conda/envs/AntiSMASH/lib/python3.10/site-packages/antismash/databases"
 ANTISMASH_DIR="/gxfs_work/geomar/smomw681/DATA/MAG_ALL/AntiSMASH_ALL/AntiSMASH_CTG"
